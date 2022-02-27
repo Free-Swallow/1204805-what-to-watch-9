@@ -1,7 +1,8 @@
-import MovieCardComponent from '../movie-card-component/movie-card-component';
-import FooterComponent from '../footer-component/footer-component';
+import MovieCardComponent from '../../components/movie-card-component/movie-card-component';
+import FooterComponent from '../../components/footer-component/footer-component';
+import AuthComponent from '../../components/auth-component/auth-component';
 
-function MyListComponent(): JSX.Element {
+function MyListScreen(): JSX.Element {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -15,16 +16,8 @@ function MyListComponent(): JSX.Element {
 
         <h1 className="page-title user-page__title">My list</h1>
 
-        <ul className="user-block">
-          <li className="user-block__item">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-            </div>
-          </li>
-          <li className="user-block__item">
-            <a className="user-block__link">Sign out</a>
-          </li>
-        </ul>
+        <AuthComponent />
+
       </header>
 
       <section className="catalog">
@@ -48,4 +41,4 @@ function MyListComponent(): JSX.Element {
   );
 }
 
-export default MyListComponent;
+export default MyListScreen;
