@@ -1,6 +1,6 @@
-import MainHeaderComponent from '../main-header-component/main-header-component';
-import FooterComponent from '../footer-component/footer-component';
-import MovieCardComponent from '../movie-card-component/movie-card-component';
+import MainHeaderComponent from '../../components/main-header-component/main-header-component';
+import FooterComponent from '../../components/footer-component/footer-component';
+import MovieCardComponent from '../../components/movie-card-component/movie-card-component';
 
 type MainStartProps = {
   movieName: string;
@@ -8,7 +8,7 @@ type MainStartProps = {
   movieKind: string;
 }
 
-function MainStartComponent({movieName, movieRelease, movieKind}: MainStartProps): JSX.Element {
+function MainStartScreen({movieName, movieRelease, movieKind}: MainStartProps): JSX.Element {
   return (
     <>
       <MainHeaderComponent movieName={movieName} movieRelease={movieRelease} movieKind={movieKind} />
@@ -19,34 +19,34 @@ function MainStartComponent({movieName, movieRelease, movieKind}: MainStartProps
 
           <ul className="catalog__genres-list">
             <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="#" className="catalog__genres-link">All genres</a>
+              <a href="/#" className="catalog__genres-link">All genres</a>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Comedies</a>
+              <a href="/#" className="catalog__genres-link">Comedies</a>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Crime</a>
+              <a href="/#" className="catalog__genres-link">Crime</a>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Documentary</a>
+              <a href="/#" className="catalog__genres-link">Documentary</a>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Dramas</a>
+              <a href="/#" className="catalog__genres-link">Dramas</a>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Horror</a>
+              <a href="/#" className="catalog__genres-link">Horror</a>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Kids & Family</a>
+              <a href="/#" className="catalog__genres-link">Kids & Family</a>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Romance</a>
+              <a href="/#" className="catalog__genres-link">Romance</a>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Sci-Fi</a>
+              <a href="/#" className="catalog__genres-link">Sci-Fi</a>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Thrillers</a>
+              <a href="/#" className="catalog__genres-link">Thrillers</a>
             </li>
           </ul>
 
@@ -80,4 +80,4 @@ function MainStartComponent({movieName, movieRelease, movieKind}: MainStartProps
   );
 }
 
-export default MainStartComponent;
+export default MainStartScreen;

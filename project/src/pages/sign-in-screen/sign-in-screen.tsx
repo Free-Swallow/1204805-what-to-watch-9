@@ -1,6 +1,6 @@
-import FooterComponent from '../footer-component/footer-component';
+import FooterComponent from '../../components/footer-component/footer-component';
 
-function SignInComponent(): JSX.Element {
+function SignInScreen(): JSX.Element {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -37,4 +37,4 @@ function SignInComponent(): JSX.Element {
   );
 }
 
-export default SignInComponent;
+export default SignInScreen;

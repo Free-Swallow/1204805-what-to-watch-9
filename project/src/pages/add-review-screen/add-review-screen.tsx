@@ -1,4 +1,6 @@
-function AddReviewComponent(): JSX.Element {
+import NoAuthComponent from '../../components/no-auth-component/no-auth-component';
+
+function AddReviewScreen(): JSX.Element {
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
@@ -23,21 +25,13 @@ function AddReviewComponent(): JSX.Element {
                 <a href="film-page.html" className="breadcrumbs__link">The Grand Budapest Hotel</a>
               </li>
               <li className="breadcrumbs__item">
-                <a className="breadcrumbs__link">Add review</a>
+                <a href="/#" className="breadcrumbs__link">Add review</a>
               </li>
             </ul>
           </nav>
 
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
-            </li>
-          </ul>
+          <NoAuthComponent />
+
         </header>
 
         <div className="film-card__poster film-card__poster--small">
@@ -95,4 +89,4 @@ function AddReviewComponent(): JSX.Element {
   );
 }
 
-export default AddReviewComponent;
+export default AddReviewScreen;
