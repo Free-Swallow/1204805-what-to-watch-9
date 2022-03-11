@@ -1,11 +1,17 @@
+import {StyleMovie} from '../../types/movies';
+
+type PlayerScreenProps = {
+  movie: StyleMovie;
+}
+
 const playerStyle = {
   left: '30%',
 };
 
-function PlayerScreen(): JSX.Element {
+function PlayerScreen({movie}: PlayerScreenProps): JSX.Element {
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src="#" className="player__video" poster={movie.previewVideoLink}></video>
 
       <button type="button" className="player__exit">Exit</button>
 
@@ -15,7 +21,7 @@ function PlayerScreen(): JSX.Element {
             <progress className="player__progress" value="30" max="100"></progress>
             <div className="player__toggler" style={playerStyle}>Toggler</div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div className="player__time-value">{movie.runTime}</div>
         </div>
 
         <div className="player__controls-row">

@@ -1,17 +1,18 @@
 import MainHeaderComponent from '../../components/main-header-component/main-header-component';
 import FooterComponent from '../../components/footer-component/footer-component';
-import MovieCardComponent from '../../components/movie-card-component/movie-card-component';
+import MoviesListComponent from '../../components/movies-list-component/movies-list-component';
+import {MoviesData} from '../../types/movies';
 
 type MainStartProps = {
-  movieName: string;
-  movieRelease: number;
-  movieKind: string;
+  movies: MoviesData;
 }
 
-function MainStartScreen({movieName, movieRelease, movieKind}: MainStartProps): JSX.Element {
+function MainStartScreen({movies}: MainStartProps): JSX.Element {
+  const [firstMovies] = movies;
+
   return (
     <>
-      <MainHeaderComponent movieName={movieName} movieRelease={movieRelease} movieKind={movieKind} />
+      <MainHeaderComponent firstMovies={firstMovies}/>
 
       <div className="page-content">
         <section className="catalog">
@@ -50,24 +51,7 @@ function MainStartScreen({movieName, movieRelease, movieKind}: MainStartProps): 
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            <MovieCardComponent />
-            <MovieCardComponent />
-            <MovieCardComponent />
-            <MovieCardComponent />
-            <MovieCardComponent />
-            <MovieCardComponent />
-            <MovieCardComponent />
-            <MovieCardComponent />
-            <MovieCardComponent />
-            <MovieCardComponent />
-            <MovieCardComponent />
-            <MovieCardComponent />
-            <MovieCardComponent />
-            <MovieCardComponent />
-            <MovieCardComponent />
-            <MovieCardComponent />
-          </div>
+          <MoviesListComponent movies={movies} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
