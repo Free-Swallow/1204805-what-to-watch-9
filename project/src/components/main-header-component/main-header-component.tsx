@@ -1,13 +1,15 @@
 // import AuthComponent from '../auth-component/auth-component';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 import NoAuthComponent from '../no-auth-component/no-auth-component';
+import {StyleMovie} from '../../types/movies';
 
 type MainHeaderProps = {
-  movieName: string;
-  movieRelease: number;
-  movieKind: string;
+  firstMovies: StyleMovie;
 }
 
-function MainHeaderComponent({movieName, movieRelease, movieKind}: MainHeaderProps): JSX.Element {
+function MainHeaderComponent({firstMovies}: MainHeaderProps): JSX.Element {
+
   return (
     <section className="film-card">
       <div className="film-card__bg">
@@ -18,11 +20,11 @@ function MainHeaderComponent({movieName, movieRelease, movieKind}: MainHeaderPro
 
       <header className="page-header film-card__head">
         <div className="logo">
-          <a href="/#" className="logo__link">
+          <Link to={AppRoute.Main} className="logo__link">
             <span className="logo__letter logo__letter--1">W</span>
             <span className="logo__letter logo__letter--2">T</span>
             <span className="logo__letter logo__letter--3">W</span>
-          </a>
+          </Link>
         </div>
 
         <NoAuthComponent />
@@ -32,14 +34,14 @@ function MainHeaderComponent({movieName, movieRelease, movieKind}: MainHeaderPro
       <div className="film-card__wrap">
         <div className="film-card__info">
           <div className="film-card__poster">
-            <img src="../img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+            <img src={firstMovies.posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327" />
           </div>
 
           <div className="film-card__desc">
-            <h2 className="film-card__title">{movieName}</h2>
+            <h2 className="film-card__title">{firstMovies.name}</h2>
             <p className="film-card__meta">
-              <span className="film-card__genre">{movieKind}</span>
-              <span className="film-card__year">{movieRelease}</span>
+              <span className="film-card__genre">{firstMovies.genre}</span>
+              <span className="film-card__year">{firstMovies.released}</span>
             </p>
 
             <div className="film-card__buttons">

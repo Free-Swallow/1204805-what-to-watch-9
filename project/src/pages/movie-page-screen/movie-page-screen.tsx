@@ -1,8 +1,17 @@
-import MovieCardComponent from '../../components/movie-card-component/movie-card-component';
 import FooterComponent from '../../components/footer-component/footer-component';
 import NoAuthComponent from '../../components/no-auth-component/no-auth-component';
+import MoviesListComponent from '../../components/movies-list-component/movies-list-component';
+import {MoviesData} from '../../types/movies';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
-function MoviePageScreen(): JSX.Element {
+type MoviePageScreenProps = {
+  movies: MoviesData;
+}
+
+function MoviePageScreen({movies}: MoviePageScreenProps): JSX.Element {
+  const [movie] = movies;
+
   return (
     <>
       <section className="film-card film-card--full">
@@ -15,11 +24,11 @@ function MoviePageScreen(): JSX.Element {
 
           <header className="page-header film-card__head">
             <div className="logo">
-              <a href="main.html" className="logo__link">
+              <Link to={AppRoute.Main} className="logo__link">
                 <span className="logo__letter logo__letter--1">W</span>
                 <span className="logo__letter logo__letter--2">T</span>
                 <span className="logo__letter logo__letter--3">W</span>
-              </a>
+              </Link>
             </div>
 
             <NoAuthComponent />
@@ -28,10 +37,10 @@ function MoviePageScreen(): JSX.Element {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="film-card__title">{movie.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">Drama</span>
-                <span className="film-card__year">2014</span>
+                <span className="film-card__genre">{movie.genre}</span>
+                <span className="film-card__year">{movie.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -47,7 +56,7 @@ function MoviePageScreen(): JSX.Element {
                   </svg>
                   <span>My list</span>
                 </button>
-                <a href="add-review.html" className="btn film-card__button">Add review</a>
+                <Link to={AppRoute.AddReview} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -75,10 +84,10 @@ function MoviePageScreen(): JSX.Element {
               </nav>
 
               <div className="film-rating">
-                <div className="film-rating__score">8,9</div>
+                <div className="film-rating__score">{movie.rating}</div>
                 <p className="film-rating__meta">
                   <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">240 ratings</span>
+                  <span className="film-rating__count">{movie.scoresCount} ratings</span>
                 </p>
               </div>
 
@@ -87,9 +96,9 @@ function MoviePageScreen(): JSX.Element {
 
                 <p>Gustave prides himself on providing first-class service to the hotel&apos;s guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave&apos;s lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.</p>
 
-                <p className="film-card__director"><strong>Director: Wes Anderson</strong></p>
+                <p className="film-card__director"><strong>Director: {movie.director}</strong></p>
 
-                <p className="film-card__starring"><strong>Starring: Bill Murray, Edward Norton, Jude Law, Willem Dafoe and other</strong></p>
+                <p className="film-card__starring"><strong>Starring: {movie.starring}</strong></p>
               </div>
             </div>
           </div>
@@ -100,12 +109,7 @@ function MoviePageScreen(): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <div className="catalog__films-list">
-            <MovieCardComponent />
-            <MovieCardComponent />
-            <MovieCardComponent />
-            <MovieCardComponent />
-          </div>
+          <MoviesListComponent movies={movies} />
         </section>
 
         <FooterComponent />

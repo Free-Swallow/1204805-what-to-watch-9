@@ -8,20 +8,22 @@ import SignInScreen from '../../pages/sign-in-screen/sign-in-screen';
 import MyListScreen from '../../pages/my-list-screen/my-list-screen';
 import MoviePageScreen from '../../pages/movie-page-screen/movie-page-screen';
 import PrivateRoute from '../private-route/private-route';
+import {CommentsData, MoviesData} from '../../types/movies';
 
 type AppProps = {
-  movieName: string;
-  movieRelease: number;
-  movieKind: string;
+  movies: MoviesData;
+  comments: CommentsData;
 }
 
-function App({movieName, movieRelease, movieKind}: AppProps): JSX.Element {
+function App({movies, comments}: AppProps): JSX.Element {
+  const [firstMovie] = movies;
+
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainStartScreen movieName={movieName} movieRelease={movieRelease} movieKind={movieKind} />}
+          element={<MainStartScreen movies={movies}/>}
         />
         <Route
           path={AppRoute.SignIn}
@@ -29,7 +31,7 @@ function App({movieName, movieRelease, movieKind}: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Film}
-          element={<MoviePageScreen />}
+          element={<MoviePageScreen movies={movies}/>}
         />
         <Route
           path={AppRoute.MyList}
@@ -37,17 +39,17 @@ function App({movieName, movieRelease, movieKind}: AppProps): JSX.Element {
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.NoAuth}
             >
-              <MyListScreen />
+              <MyListScreen movies={movies}/>
             </PrivateRoute>
           }
         />
         <Route
           path={AppRoute.AddReview}
-          element={<AddReviewScreen />}
+          element={<AddReviewScreen movie={firstMovie} />}
         />
         <Route
           path={AppRoute.Player}
-          element={<PlayerScreen />}
+          element={<PlayerScreen movie={firstMovie} />}
         />
         <Route
           path="*"
