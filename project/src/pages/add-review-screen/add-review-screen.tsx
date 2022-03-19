@@ -1,22 +1,22 @@
 import NoAuthComponent from '../../components/no-auth-component/no-auth-component';
-import {StyleMovie} from '../../types/movies';
+import {Movie} from '../../types/movies';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {useState, ChangeEvent} from 'react';
 
 type AddReviewProps = {
-  movie: StyleMovie;
+  movie: Movie;
 }
 
 // CommentText записан в название фильма!
 
 function AddReviewScreen({movie}: AddReviewProps): JSX.Element {
-  const [commentText, setComText] = useState('');
+  const [commentText, setCommentText] = useState('');
 
   const fieldChangeHandle = (evt: ChangeEvent<HTMLTextAreaElement>): void => {
     const {value} = evt.target;
 
-    setComText(`${value}`);
+    setCommentText(value);
   };
 
   return (

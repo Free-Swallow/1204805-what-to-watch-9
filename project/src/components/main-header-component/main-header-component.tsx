@@ -2,10 +2,10 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import NoAuthComponent from '../no-auth-component/no-auth-component';
-import {StyleMovie} from '../../types/movies';
+import {Movie} from '../../types/movies';
 
 type MainHeaderProps = {
-  firstMovies: StyleMovie;
+  firstMovies: Movie;
 }
 
 function MainHeaderComponent({firstMovies}: MainHeaderProps): JSX.Element {

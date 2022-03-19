@@ -1,9 +1,8 @@
 import {MoviesData, CommentsData} from '../types/movies';
-import {nanoid} from '@reduxjs/toolkit';
 
 const Movies: MoviesData = [
   {
-    id: Number(nanoid()),
+    id: 111,
     previewImage: '../img/orlando.jpg',
     posterImage: '../img/the-grand-budapest-hotel-poster.jpg',
     backgroundImage: '../img/bg-the-grand-budapest-hotel.jpg',
@@ -24,7 +23,7 @@ const Movies: MoviesData = [
     isFavorite: true,
   },
   {
-    id: Number(nanoid()),
+    id: 112,
     previewImage: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
     posterImage: '../img/the-grand-budapest-hotel-poster.jpg',
     backgroundImage: '../img/bg-the-grand-budapest-hotel.jpg',
@@ -43,7 +42,7 @@ const Movies: MoviesData = [
     isFavorite: false,
   },
   {
-    id: Number(nanoid()),
+    id: 113,
     previewImage: 'img/bohemian-rhapsody.jpg',
     posterImage: '../img/the-grand-budapest-hotel-poster.jpg',
     backgroundImage: '../img/bg-the-grand-budapest-hotel.jpg',
@@ -64,7 +63,7 @@ const Movies: MoviesData = [
     isFavorite: true,
   },
   {
-    id: Number(nanoid()),
+    id: 114,
     previewImage: 'img/macbeth.jpg',
     posterImage: '../img/the-grand-budapest-hotel-poster.jpg',
     backgroundImage: '../img/bg-the-grand-budapest-hotel.jpg',
@@ -85,7 +84,7 @@ const Movies: MoviesData = [
     isFavorite: false,
   },
   {
-    id: Number(nanoid()),
+    id: 115,
     previewImage: 'img/aviator.jpg',
     posterImage: '../img/the-grand-budapest-hotel-poster.jpg',
     backgroundImage: '../img/bg-the-grand-budapest-hotel.jpg',
@@ -106,7 +105,7 @@ const Movies: MoviesData = [
     isFavorite: false,
   },
   {
-    id: Number(nanoid()),
+    id: 116,
     previewImage: 'img/we-need-to-talk-about-kevin.jpg',
     posterImage: '../img/the-grand-budapest-hotel-poster.jpg',
     backgroundImage: '../img/bg-the-grand-budapest-hotel.jpg',
@@ -127,7 +126,7 @@ const Movies: MoviesData = [
     isFavorite: true,
   },
   {
-    id: Number(nanoid()),
+    id: 117,
     previewImage: 'img/what-we-do-in-the-shadows.jpg',
     posterImage: '../img/the-grand-budapest-hotel-poster.jpg',
     backgroundImage: '../img/bg-the-grand-budapest-hotel.jpg',
@@ -148,7 +147,7 @@ const Movies: MoviesData = [
     isFavorite: false,
   },
   {
-    id: Number(nanoid()),
+    id: 118,
     previewImage: 'img/revenant.jpg',
     posterImage: '../img/the-grand-budapest-hotel-poster.jpg',
     backgroundImage: '../img/bg-the-grand-budapest-hotel.jpg',
@@ -169,7 +168,7 @@ const Movies: MoviesData = [
     isFavorite: true,
   },
   {
-    id: Number(nanoid()),
+    id: 119,
     previewImage: 'img/johnny-english.jpg',
     posterImage: '../img/the-grand-budapest-hotel-poster.jpg',
     backgroundImage: '../img/bg-the-grand-budapest-hotel.jpg',
@@ -195,60 +194,60 @@ const Comments: CommentsData = [
   {
     comment: 'Interesting setting and a good cast',
     date: '19.10.2020',
-    id: Number(nanoid()),
+    id: 11,
     rating: 9,
     user: {
-      id: Number(nanoid()),
+      id: 12,
       name: 'John Doe',
     },
   },
   {
     comment: 'Booooooooooring',
     date: '11.11.1991',
-    id: Number(nanoid()),
+    id: 13,
     rating: 9,
     user: {
-      id: Number(nanoid()),
+      id: 14,
       name: 'Tim Macoveev',
     },
   },
   {
     comment: 'Very very old. Meh',
     date: '30.12.2022',
-    id: Number(nanoid()),
+    id: 15,
     rating: 9,
     user: {
-      id: Number(nanoid()),
+      id: 16,
       name: 'Владимир Путин',
     },
   },
   {
     comment: 'Almost two hours? Seriously?',
     date: '12.1.2222',
-    id: Number(nanoid()),
+    id: 17,
     rating: 2,
     user: {
-      id: Number(nanoid()),
+      id: 18,
       name: 'Валера настало твоё время',
     },
   },
   {
     comment: 'Видали и лучше',
     date: '1.12.1234',
-    id: Number(nanoid()),
+    id: 19,
     rating: 4,
     user: {
-      id: Number(nanoid()),
+      id:20,
       name: 'Женька из 3-го подъезда',
     },
   },
   {
     comment: 'Шляпа',
     date: '20.10.1999',
-    id: Number(nanoid()),
+    id: 21,
     rating: 1,
     user: {
-      id: Number(nanoid()),
+      id: 22,
       name: 'Tim Macoveev',
     },
   },

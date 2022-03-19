@@ -1,4 +1,4 @@
-type StyleMovie = {
+type Movie = {
   id: number
   name: string
   posterImage: string
@@ -18,9 +18,9 @@ type StyleMovie = {
   isFavorite: boolean
 };
 
-type MoviesData = StyleMovie[];
+type MoviesData = Movie[];
 
-type StyleComment = {
+type Comment = {
   comment: string
   date: string
   id: number
@@ -31,6 +31,6 @@ type StyleComment = {
   }
 }
 
-type CommentsData = StyleComment[];
+type CommentsData = Comment[];
 
-export type {StyleMovie, MoviesData, StyleComment, CommentsData};
+export type {Movie, MoviesData, Comment, CommentsData};
