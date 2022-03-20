@@ -1,7 +1,7 @@
-import {StyleMovie} from '../../types/movies';
+import {Movie} from '../../types/movies';
 
 type PlayerScreenProps = {
-  movie: StyleMovie;
+  movie: Movie;
 }
 
 const playerStyle = {
