@@ -31,7 +31,7 @@ function App({movies, comments}: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Film}
-          element={<MoviePageScreen movies={movies}/>}
+          element={<MoviePageScreen comments={comments} movies={movies}/>}
         />
         <Route
           path={AppRoute.MyList}
