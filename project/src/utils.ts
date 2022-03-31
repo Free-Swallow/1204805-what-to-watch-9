@@ -13,16 +13,15 @@ function getTimeFromMins(mins: number) {
   return `${time[0]} h ${time[1]}  m`;
 }
 
-function getSimilarMovies(movies: MoviesData, genre: string): MoviesData {
+function getSimilarMovies(movies: MoviesData, genre: string, number = movies.length): MoviesData {
   const moviesFiltered = [];
-  const NUMBER_OF_MOVIES = 4;
 
   for (const movie of movies) {
-    if (movie.genre === genre) {
+    if (movie.genre === genre || genre === 'All genres') {
       moviesFiltered.push(movie);
     }
 
-    if (moviesFiltered.length === NUMBER_OF_MOVIES) {
+    if (moviesFiltered.length === number) {
       break;
     }
   }

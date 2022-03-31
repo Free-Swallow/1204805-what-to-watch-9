@@ -12,11 +12,11 @@ function MoviePageReviewsComponent({comments}: MoviePageReviewsProps): JSX.Eleme
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
-        {randomComments.map((comment) => (<CommentComponent key={comment.id} comment={comment} />))}
+        {randomComments.map((comment) => (<CommentComponent key={comment.id} commentData={comment} />))}
       </div>
 
       <div className="film-card__reviews-col">
-        {randomCommentsSecond.map((comment) => (<CommentComponent key={comment.id} comment={comment} />))}
+        {randomCommentsSecond.map((comment) => (<CommentComponent key={comment.id} commentData={comment} />))}
       </div>
     </div>
   );
