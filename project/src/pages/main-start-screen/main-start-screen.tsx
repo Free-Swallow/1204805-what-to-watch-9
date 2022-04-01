@@ -6,17 +6,18 @@ import {useAppSelector} from '../../hooks';
 import type {initialStateProps} from '../../store/reducer';
 import TabsMoviesListComponent from '../../components/tabs-movies-list-component/tabs-movies-list-component';
 import {getSimilarMovies} from '../../utils';
+import {useState} from 'react';
 
 type MainStartProps = {
   movies: MoviesData;
 }
 
 function MainStartScreen({movies}: MainStartProps): JSX.Element {
-
+  const [moviesState, setMoviesState] = useState(8);
   const [firstMovies] = movies;
   const moviesList = useAppSelector((state: initialStateProps) => state.moviesList);
   const currentGenre = useAppSelector((state: initialStateProps) => state.genre);
-  const bitch = getSimilarMovies(moviesList, currentGenre);
+  getSimilarMovies(moviesList, currentGenre, moviesState);
 
   const genres = useAppSelector((state: initialStateProps) => {
     const moviesGenres = state.moviesList.map((movie) => movie.genre);
@@ -33,7 +34,7 @@ function MainStartScreen({movies}: MainStartProps): JSX.Element {
 
           <TabsMoviesListComponent genres={genres} />
 
-          <MoviesListComponent movies={bitch} />
+          <MoviesListComponent movies={getSimilarMovies(moviesList, currentGenre, moviesState)} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
