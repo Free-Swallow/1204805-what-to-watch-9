@@ -1,5 +1,5 @@
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {changeGenre} from '../../store/action';
+import {changeGenre, resetMoviesCount} from '../../store/action';
 import {initialStateProps} from '../../store/reducer';
 import {nanoid} from '@reduxjs/toolkit';
 
@@ -16,7 +16,7 @@ function TabsMoviesListComponent({genres}: TabsMoviesListProps):JSX.Element {
     <ul className="catalog__genres-list">
       {genres.map((genre) => (
         <li key={nanoid()} className={`catalog__genres-item ${isActive(genre)}`}>
-          <a onClick={() => {dispatch(changeGenre(genre));}} href="/#" className="catalog__genres-link">{genre}</a>
+          <a onClick={() => {dispatch(changeGenre(genre)); dispatch(resetMoviesCount());}} href="/#" className="catalog__genres-link">{genre}</a>
         </li>
       ))}
     </ul>

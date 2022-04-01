@@ -1,23 +1,26 @@
 import MainHeaderComponent from '../../components/main-header-component/main-header-component';
 import FooterComponent from '../../components/footer-component/footer-component';
 import MoviesListComponent from '../../components/movies-list-component/movies-list-component';
+import ButtonShowMoreComponent from '../../components/button-show-more-component/button-show-more-component';
 import {MoviesData} from '../../types/movies';
 import {useAppSelector} from '../../hooks';
 import type {initialStateProps} from '../../store/reducer';
 import TabsMoviesListComponent from '../../components/tabs-movies-list-component/tabs-movies-list-component';
-import {getSimilarMovies} from '../../utils';
-import {useState} from 'react';
 
 type MainStartProps = {
   movies: MoviesData;
 }
 
 function MainStartScreen({movies}: MainStartProps): JSX.Element {
-  const [moviesState, setMoviesState] = useState(8);
   const [firstMovies] = movies;
-  const moviesList = useAppSelector((state: initialStateProps) => state.moviesList);
-  const currentGenre = useAppSelector((state: initialStateProps) => state.genre);
-  getSimilarMovies(moviesList, currentGenre, moviesState);
+  const moviesCount = useAppSelector((state: initialStateProps) => state.moviesCount);
+
+  const testList = useAppSelector((state: initialStateProps) => {
+    if (state.genre === 'All genres') {
+      return state.moviesList;
+    }
+    return state.moviesList.filter((movie) => movie.genre === state.genre);
+  });
 
   const genres = useAppSelector((state: initialStateProps) => {
     const moviesGenres = state.moviesList.map((movie) => movie.genre);
@@ -34,14 +37,14 @@ function MainStartScreen({movies}: MainStartProps): JSX.Element {
 
           <TabsMoviesListComponent genres={genres} />
 
-          <MoviesListComponent movies={getSimilarMovies(moviesList, currentGenre, moviesState)} />
+          <MoviesListComponent movies={testList.slice(0, moviesCount)} />
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          {moviesCount < testList.length ? <ButtonShowMoreComponent/> : null}
+
         </section>
 
         <FooterComponent />
+
       </div>
     </>
   );
