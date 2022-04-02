@@ -12,9 +12,11 @@ type MoviePageScreenProps = {
   comments: CommentsData;
 }
 
+const NUMBER_OF_MOVIES = 4;
+
 function MoviePageScreen({movies, comments}: MoviePageScreenProps): JSX.Element {
   const [movie] = movies;
-  const similarMovies = getSimilarMovies(movies, movie.genre);
+  const similarMovies = getSimilarMovies(movies, movie.genre, NUMBER_OF_MOVIES);
 
   return (
     <>

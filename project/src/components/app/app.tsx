@@ -9,6 +9,8 @@ import MyListScreen from '../../pages/my-list-screen/my-list-screen';
 import MoviePageScreen from '../../pages/movie-page-screen/movie-page-screen';
 import PrivateRoute from '../private-route/private-route';
 import {CommentsData, MoviesData} from '../../types/movies';
+import {useAppDispatch} from '../../hooks';
+import {currentMovies} from '../../store/action';
 
 type AppProps = {
   movies: MoviesData;
@@ -17,6 +19,8 @@ type AppProps = {
 
 function App({movies, comments}: AppProps): JSX.Element {
   const [firstMovie] = movies;
+  const dispatch = useAppDispatch();
+  dispatch(currentMovies(movies));
 
   return (
     <BrowserRouter>
