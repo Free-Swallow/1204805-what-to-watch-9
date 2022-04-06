@@ -1,4 +1,6 @@
 import {MoviesData} from './types/movies';
+import {basicGenre} from './const';
+import {AuthorizationStatus} from './const';
 
 function getTimeFromMins(mins: number) {
   const time = [];
@@ -13,15 +15,15 @@ function getTimeFromMins(mins: number) {
   return `${time[0]} h ${time[1]}  m`;
 }
 
-function getSimilarMovies(movies: MoviesData, genre: string, number = movies.length): MoviesData {
+function getSimilarMovies(movies: MoviesData, genre: string, count = movies.length): MoviesData {
   const moviesFiltered = [];
 
   for (const movie of movies) {
-    if (movie.genre === genre || genre === 'All genres') {
+    if (movie.genre === genre || genre === basicGenre) {
       moviesFiltered.push(movie);
     }
 
-    if (moviesFiltered.length === number) {
+    if (moviesFiltered.length === count) {
       break;
     }
   }
@@ -29,4 +31,7 @@ function getSimilarMovies(movies: MoviesData, genre: string, number = movies.len
   return moviesFiltered;
 }
 
-export {getTimeFromMins, getSimilarMovies};
+const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
+  authorizationStatus === AuthorizationStatus.Unknown;
+
+export {getTimeFromMins, getSimilarMovies, isCheckedAuth};
