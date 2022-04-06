@@ -9,8 +9,7 @@ import MyListScreen from '../../pages/my-list-screen/my-list-screen';
 import MoviePageScreen from '../../pages/movie-page-screen/movie-page-screen';
 import PrivateRoute from '../private-route/private-route';
 import {CommentsData, MoviesData} from '../../types/movies';
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {loadMovies} from '../../store/action';
+import {useAppSelector} from '../../hooks';
 import {isCheckedAuth} from '../../utils';
 import LoadingScreen from '../loading-component/loading-component';
 

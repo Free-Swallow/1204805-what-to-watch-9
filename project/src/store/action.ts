@@ -15,5 +15,5 @@ export {
   resetMoviesCount,
   loadMovies,
   requireAuthorization,
-  setError,
+  setError
 };
