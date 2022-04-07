@@ -6,6 +6,7 @@ import {MoviesData} from '../../types/movies';
 import {useAppSelector} from '../../hooks';
 import type {initialStateProps} from '../../store/reducer';
 import TabsMoviesListComponent from '../../components/tabs-movies-list-component/tabs-movies-list-component';
+import {basicGenre} from '../../const';
 
 type MainStartProps = {
   movies: MoviesData;
@@ -14,18 +15,14 @@ type MainStartProps = {
 function MainStartScreen({movies}: MainStartProps): JSX.Element {
   const [firstMovies] = movies;
   const moviesCount = useAppSelector((state: initialStateProps) => state.moviesCount);
-
-  const testList = useAppSelector((state: initialStateProps) => {
-    if (state.genre === 'All genres') {
-      return state.moviesList;
-    }
-    return state.moviesList.filter((movie) => movie.genre === state.genre);
-  });
-
-  const genres = useAppSelector((state: initialStateProps) => {
+  const moviesList = useAppSelector((state: initialStateProps) => state.moviesList);
+  const currentGenre = useAppSelector((state: initialStateProps) => state.genre);
+  const genresList = useAppSelector((state: initialStateProps) => {
     const moviesGenres = state.moviesList.map((movie) => movie.genre);
-    return ['All genres', ...new Set(moviesGenres)];
+    return [basicGenre, ...new Set(moviesGenres)];
   });
+
+  const filteredMovies = currentGenre === basicGenre ? moviesList : moviesList.filter((movie) => movie.genre === currentGenre);
 
   return (
     <>
@@ -35,11 +32,11 @@ function MainStartScreen({movies}: MainStartProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <TabsMoviesListComponent genres={genres} />
+          <TabsMoviesListComponent genres={genresList} />
 
-          <MoviesListComponent movies={testList.slice(0, moviesCount)} />
+          <MoviesListComponent movies={filteredMovies.slice(0, moviesCount)} />
 
-          {moviesCount < testList.length ? <ButtonShowMoreComponent/> : null}
+          {moviesCount < filteredMovies.length ? <ButtonShowMoreComponent/> : null}
 
         </section>
 
