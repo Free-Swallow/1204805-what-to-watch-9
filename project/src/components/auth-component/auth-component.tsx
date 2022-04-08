@@ -1,4 +1,10 @@
+import {logoutAction} from '../../store/api-actions';
+import {Link} from 'react-router-dom';
+import {useAppDispatch} from '../../hooks';
+
 function AuthComponent(): JSX.Element {
+  const dispatch = useAppDispatch();
+
   return (
     <ul className="user-block">
       <li className="user-block__item">
@@ -7,7 +13,7 @@ function AuthComponent(): JSX.Element {
         </div>
       </li>
       <li className="user-block__item">
-        <a href="/#" className="user-block__link">Sign out</a>
+        <Link onClick={(evt) => {evt.preventDefault(); dispatch(logoutAction());}} to='/' className="user-block__link">Sign out</Link>
       </li>
     </ul>
   );

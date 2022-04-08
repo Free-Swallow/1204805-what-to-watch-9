@@ -1,26 +1,53 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeGenre, changeMoviesCount, resetMoviesCount, loadMovies, requireAuthorization, setError} from './action';
-import {MoviesData} from '../types/movies';
-import {basicGenre, AuthorizationStatus} from '../const';
+import {
+  changeGenre,
+  changeMoviesCount,
+  resetMoviesCount,
+  loadMovies,
+  requireAuthorization,
+  loadCurrentMovie,
+  loadPromoMovie,
+  loadSimilarMovie,
+  loadComments,
+  isPushComment,
+  loadFavoriteMovie,
+  isPushFavoriteMovie
+} from './action';
+import {MoviesData, Movie, CommentsData} from '../types/movies';
+import {defaultGenre, AuthorizationStatus} from '../const';
 
 type initialStateProps = {
   genre: string;
   moviesList: MoviesData;
   moviesCount: number;
   authorizationStatus: AuthorizationStatus;
-  error: string;
   isDataLoaded: boolean;
+  currentMovie: Movie;
+  promo: Movie;
+  favoriteMoviesList: MoviesData;
+  similarMovies: MoviesData;
+  currentMovieComments: CommentsData;
+  isCurrentMovieLoaded: boolean;
+  isCommentPush: boolean;
+  isFavoriteMoviePush: boolean;
 }
 
 const STEP_MOVIES_SHOW = 8;
 
 const initialState: initialStateProps = {
-  genre: basicGenre,
+  genre: defaultGenre,
   moviesList: [],
   moviesCount: STEP_MOVIES_SHOW,
   authorizationStatus: AuthorizationStatus.Unknown,
-  error: '',
   isDataLoaded: false,
+  currentMovie: Object.assign({}),
+  promo: Object.assign({}),
+  favoriteMoviesList: [],
+  similarMovies: [],
+  currentMovieComments: [],
+  isCurrentMovieLoaded: false,
+  isCommentPush: false,
+  isFavoriteMoviePush: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -41,8 +68,27 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     })
-    .addCase(setError, (state, action) => {
-      state.error = action.payload;
+    .addCase(loadCurrentMovie, (state, action) => {
+      state.currentMovie = action.payload;
+      state.isCurrentMovieLoaded = true;
+    })
+    .addCase(loadPromoMovie, (state, action) => {
+      state.promo = action.payload;
+    })
+    .addCase(loadSimilarMovie, (state, action) => {
+      state.similarMovies = action.payload;
+    })
+    .addCase(loadComments, (state, action) => {
+      state.currentMovieComments = action.payload;
+    })
+    .addCase(isPushComment, (state, action) => {
+      state.isCommentPush = action.payload;
+    })
+    .addCase(loadFavoriteMovie, (state, action) => {
+      state.favoriteMoviesList = action.payload;
+    })
+    .addCase(isPushFavoriteMovie, (state, action) => {
+      state.isFavoriteMoviePush = action.payload;
     });
 });
 

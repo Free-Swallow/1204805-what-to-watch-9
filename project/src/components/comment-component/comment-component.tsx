@@ -1,10 +1,14 @@
 import {Comment} from '../../types/movies';
+import dayjs from 'dayjs';
 
 type CommentProps = {
   commentData: Comment;
 }
 function CommentComponent({commentData}: CommentProps): JSX.Element {
   const {user: {name}, comment, date, rating} = commentData;
+  const convertTime = (commentDate: string) =>
+    dayjs(commentDate).format('MMMM DD, YYYY');
+
 
   return (
     <div className="review">
@@ -13,7 +17,7 @@ function CommentComponent({commentData}: CommentProps): JSX.Element {
 
         <footer className="review__details">
           <cite className="review__author">{name}</cite>
-          <time className="review__date" dateTime="2016-12-20">{date}</time>
+          <time className="review__date" dateTime={convertTime(date)}>{convertTime(date)}</time>
         </footer>
       </blockquote>
 

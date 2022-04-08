@@ -1,29 +1,58 @@
 import FooterComponent from '../../components/footer-component/footer-component';
 import NoAuthComponent from '../../components/no-auth-component/no-auth-component';
+import AuthComponent from '../../components/auth-component/auth-component';
 import MoviesListComponent from '../../components/movies-list-component/movies-list-component';
 import TabsMovieComponent from '../../components/tabs-movie-component/tabs-movie-component';
-import {CommentsData, MoviesData} from '../../types/movies';
+import {MoviesData} from '../../types/movies';
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
-import {getSimilarMovies} from '../../utils';
+import {AppRoute, MIN_MOVIES_SIMILAR, MAX_MOVIES_SIMILAR, AuthorizationStatus, APIRoute} from '../../const';
+import {useAppSelector, useAppDispatch} from '../../hooks';
+import {initialStateProps} from '../../store/reducer';
+import {useParams} from 'react-router-dom';
+import {fetchCurrentMovieAction, fetchSimilarMoviesAction} from '../../store/api-actions';
+import {useEffect, useMemo} from 'react';
+import LoadingScreen from '../../components/loading-component/loading-component';
 
-type MoviePageScreenProps = {
-  movies: MoviesData;
-  comments: CommentsData;
-}
+function MoviePageScreen(): JSX.Element {
 
-const MOVIES_NUMBER = 4;
+  const {
+    currentMovie,
+    similarMovies,
+    isCurrentMovieLoaded,
+    authorizationStatus,
+  } = useAppSelector((state: initialStateProps) => state);
 
-function MoviePageScreen({movies, comments}: MoviePageScreenProps): JSX.Element {
-  const [movie] = movies;
-  const similarMovies = getSimilarMovies(movies, movie.genre, MOVIES_NUMBER);
+  const {
+    name,
+    genre,
+    released,
+    posterImage,
+    backgroundImage,
+  } = currentMovie;
+
+  const {id} = useParams();
+
+  const dispatch = useAppDispatch();
+
+  const filteredSimilarMovies = useMemo<MoviesData>(() => similarMovies
+    .filter((item) => item.id !== currentMovie.id)
+    .slice(MIN_MOVIES_SIMILAR, MAX_MOVIES_SIMILAR), [currentMovie.id, similarMovies]);
+
+  useEffect(() => {
+    dispatch(fetchCurrentMovieAction(Number(id)));
+    dispatch(fetchSimilarMoviesAction(Number(id)));
+  }, [dispatch, id]);
+
+  if (!isCurrentMovieLoaded || !currentMovie) {
+    return <LoadingScreen />;
+  }
 
   return (
     <>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
+            <img src={backgroundImage} alt={name}/>
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -37,16 +66,16 @@ function MoviePageScreen({movies, comments}: MoviePageScreenProps): JSX.Element 
               </Link>
             </div>
 
-            <NoAuthComponent />
+            {authorizationStatus === AuthorizationStatus.Auth ? <AuthComponent /> : <NoAuthComponent/>}
 
           </header>
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{movie.name}</h2>
+              <h2 className="film-card__title">{name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{movie.genre}</span>
-                <span className="film-card__year">{movie.released}</span>
+                <span className="film-card__genre">{genre}</span>
+                <span className="film-card__year">{released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -62,7 +91,7 @@ function MoviePageScreen({movies, comments}: MoviePageScreenProps): JSX.Element 
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to={AppRoute.AddReview} className="btn film-card__button">Add review</Link>
+                {authorizationStatus === AuthorizationStatus.Auth ? <Link  to={`${APIRoute.Movies}/${id}${APIRoute.review}`} className="btn film-card__button">Add review</Link> : null}
               </div>
             </div>
           </div>
@@ -71,10 +100,10 @@ function MoviePageScreen({movies, comments}: MoviePageScreenProps): JSX.Element 
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
+              <img src={posterImage} alt={name} width="218" height="327"/>
             </div>
 
-            <TabsMovieComponent movie={movie} comments={comments} />
+            <TabsMovieComponent />
 
           </div>
         </div>
@@ -84,7 +113,7 @@ function MoviePageScreen({movies, comments}: MoviePageScreenProps): JSX.Element 
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <MoviesListComponent movies={similarMovies} />
+          <MoviesListComponent movies={filteredSimilarMovies} />
         </section>
 
         <FooterComponent />

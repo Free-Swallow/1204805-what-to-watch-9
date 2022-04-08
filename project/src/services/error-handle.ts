@@ -1,32 +1,25 @@
 import request from 'axios';
-import {store} from '../store';
-import {setError} from '../store/action';
-import {clearErrorAction} from '../store/api-actions';
 import {ErrorType} from '../types/error';
-import {HTTP_CODE} from '../const';
+import {HttpCode} from '../const';
+import {toast} from 'react-toastify';
 
 const errorHandle = (error: ErrorType): void => {
   if (!request.isAxiosError(error)) {
     throw error;
   }
 
-  const handleError = (message: string) => {
-    store.dispatch(setError(message));
-    store.dispatch(clearErrorAction);
-  };
-
   const {response} = error;
 
   if (response) {
     switch (response.status) {
-      case HTTP_CODE.BAD_REQUEST:
-        handleError(response.data.error);
+      case HttpCode.BadRequest:
+        toast.error(response.data.error);
         break;
-      case HTTP_CODE.UNAUTHORIZED:
-        handleError(response.data.error);
+      case HttpCode.Unauthorized:
+        toast.info(response.data.error);
         break;
-      case HTTP_CODE.NOT_FOUND:
-        handleError(response.data.error);
+      case HttpCode.NotFound:
+        toast.warning(response.data.error);
         break;
     }
   }

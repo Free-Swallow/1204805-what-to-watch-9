@@ -1,7 +1,7 @@
 import {Movie} from '../../types/movies';
-import {AppRoute} from '../../const';
+import {APIRoute} from '../../const';
 import {useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import VideoPlayerComponent from '../video-player-component/video-player-component';
 
 type MovieCardProps = {
@@ -11,12 +11,16 @@ type MovieCardProps = {
 // Записал в title currentMovie чтоб lint не ругался
 
 function MovieCardComponent({movie}: MovieCardProps): JSX.Element {
-  // const [currentMovie, setRecordMovie] = useState(0);
+  const {name, id, videoLink, previewImage} = movie;
+  const navigate = useNavigate();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
+  const handleClick = () => {
+    navigate(`${APIRoute.Movies}/${id}`);
+  };
+
   function handleMouseOver() {
-    // setRecordMovie(movie.id);
     setIsPlaying(true);
   }
 
@@ -30,12 +34,12 @@ function MovieCardComponent({movie}: MovieCardProps): JSX.Element {
   }
 
   return (
-    <article className="small-film-card catalog__films-card" onClick={() => {handleChangeMute();}} onMouseOver={() => {handleMouseOver();}} onMouseLeave={() => {handleMouseLeave();}}>
+    <article className="small-film-card catalog__films-card" onDoubleClick={() => {handleChangeMute();}} onClick={() => {handleClick();}} onMouseOver={() => {handleMouseOver();}} onMouseLeave={() => {handleMouseLeave();}}>
       <div className="small-film-card__image">
-        <VideoPlayerComponent muted={isMuted} isPlaying={isPlaying} src={movie.videoLink} srcPoster={movie.previewImage}/>
+        <VideoPlayerComponent muted={isMuted} isPlaying={isPlaying} src={videoLink} srcPoster={previewImage}/>
       </div>
       <h3 className="small-film-card__title">
-        <Link to={AppRoute.Film} className="small-film-card__link">{movie.name}</Link>
+        <Link to={`${APIRoute.Movies}/${id}`} className="small-film-card__link">{name}</Link>
       </h3>
     </article>
   );

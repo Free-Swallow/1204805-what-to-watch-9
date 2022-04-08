@@ -1,26 +1,47 @@
-import {Movie} from '../../types/movies';
+import {useAppSelector} from '../../hooks';
+import {RatingNumber, RatingText} from '../../const';
 
-type MovieOverviewProps = {
-  movie: Movie;
-}
+function MoviePageOverviewComponent(): JSX.Element {
+  const {currentMovie: {rating, scoresCount, description, director,starring}} = useAppSelector((state) => state);
 
-function MoviePageOverviewComponent({movie}: MovieOverviewProps): JSX.Element {
+  const getRating = (ratingMovie: number) => {
+    if (ratingMovie <= RatingNumber.Bad) {
+      return RatingText.Bad;
+    }
+
+    if (ratingMovie > RatingNumber.Bad && ratingMovie <= RatingNumber.Normal) {
+      return RatingText.Normal;
+    }
+
+    if (ratingMovie > RatingNumber.Normal && ratingMovie <= RatingNumber.Good) {
+      return RatingText.Good;
+    }
+
+    if (ratingMovie > RatingNumber.Good && ratingMovie < RatingNumber.Awesome) {
+      return RatingText.VeryGood;
+    }
+
+    if (ratingMovie === RatingNumber.Awesome) {
+      return RatingText.Awesome;
+    }
+  };
+
   return (
     <>
       <div className="film-rating">
-        <div className="film-rating__score">{movie.rating}</div>
+        <div className="film-rating__score">{rating}</div>
         <p className="film-rating__meta">
-          <span className="film-rating__level">Very good</span>
-          <span className="film-rating__count">{movie.scoresCount} ratings</span>
+          <span className="film-rating__level">{getRating(rating)}</span>
+          <span className="film-rating__count">{scoresCount} ratings</span>
         </p>
       </div>
 
       <div className="film-card__text">
-        <p>{movie.description}</p>
+        <p>{description}</p>
 
-        <p className="film-card__director"><strong>Director: {movie.director}</strong></p>
+        <p className="film-card__director"><strong>Director: {director}</strong></p>
 
-        <p className="film-card__starring"><strong>Starring: {movie.starring}</strong></p>
+        <p className="film-card__starring"><strong>Starring: {starring.join(', ')}</strong></p>
       </div>
     </>
   );
