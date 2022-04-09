@@ -1,19 +1,8 @@
 import {createAction} from '@reduxjs/toolkit';
-import {MoviesData} from '../types/movies';
-import {AuthorizationStatus} from '../const';
+import {AppRoute} from '../const';
 
-const changeGenre = createAction<string>('main/custom-filter');
-const changeMoviesCount = createAction('main/movies-count');
-const resetMoviesCount = createAction('main/movies-count-reset');
-const loadMovies = createAction<MoviesData>('data/load-movies');
-const requireAuthorization = createAction<AuthorizationStatus>('user/require-authorization');
-const setError = createAction<string>('main/setError');
+const redirectToRoute = createAction<AppRoute>('main/redirect-to-route');
 
 export {
-  changeGenre,
-  changeMoviesCount,
-  resetMoviesCount,
-  loadMovies,
-  requireAuthorization,
-  setError
+  redirectToRoute
 };

@@ -1,6 +1,12 @@
+import {loadingComponentStyle} from '../../style/loading-component-style';
+
 function LoadingScreen(): JSX.Element {
   return (
-    <p>Loading ...</p>
+    <div className="user-page">
+      <header className="page-header user-page__head">
+        <h1 style={loadingComponentStyle} className="page-title user-page__title">Loading, please wait...</h1>
+      </header>
+    </div>
   );
 }
 

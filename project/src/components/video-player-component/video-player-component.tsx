@@ -1,15 +1,8 @@
 import {useRef, useEffect} from 'react';
+import {VideoPlayerProps} from '../../types/components';
+import {INTERVAL_START_VIDEO} from '../../const';
 
-const INTERVAL_START_VIDEO = 1000;
-
-type videoPlayerProps = {
-  isPlaying: boolean;
-  src: string;
-  muted: boolean;
-  srcPoster: string;
-}
-
-function VideoPlayerComponent({isPlaying, src, muted, srcPoster}: videoPlayerProps): JSX.Element {
+function VideoPlayerComponent({isPlaying, src, srcPoster}: VideoPlayerProps): JSX.Element {
 
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -38,10 +31,9 @@ function VideoPlayerComponent({isPlaying, src, muted, srcPoster}: videoPlayerPro
       return;
     }
 
-    if (muted) {
-      videoRefCurrent.defaultMuted = true;
-      videoRefCurrent.muted = true;
-    }
+    videoRefCurrent.defaultMuted = true;
+    videoRefCurrent.muted = true;
+
 
     return () => {
       if (videoRefCurrent !== null) {
@@ -49,7 +41,7 @@ function VideoPlayerComponent({isPlaying, src, muted, srcPoster}: videoPlayerPro
         videoRefCurrent.muted = false;
       }
     };
-  }, [muted]);
+  }, []);
 
   return (
     <video src={src} ref={videoRef} poster={srcPoster} width="280" height="175" />

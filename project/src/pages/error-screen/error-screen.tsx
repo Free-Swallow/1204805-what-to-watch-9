@@ -1,13 +1,7 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
-
-type ErrorScreenProps = {
-  link: string;
-}
-
-const errorLinkStyle = {
-  textDecoration: 'none',
-};
+import {ErrorScreenProps} from '../../types/components';
+import {errorLinkStyle} from '../../style/error-link-style';
 
 function ErrorScreen({link}: ErrorScreenProps): JSX.Element {
   return (

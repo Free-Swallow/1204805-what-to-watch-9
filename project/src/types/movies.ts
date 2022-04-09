@@ -33,4 +33,21 @@ type Comment = {
 
 type CommentsData = Comment[];
 
-export type {Movie, MoviesData, Comment, CommentsData};
+type FavoriteMovie = {
+  id: number;
+  favoriteStatus: number;
+};
+
+type CommentUser = {
+  id: number;
+  comment: string;
+  rating: number;
+};
+
+type Rating = {
+  rating: number;
+}
+
+type Ratings = Rating[];
+
+export type {Movie, MoviesData, Comment, CommentsData, FavoriteMovie, CommentUser, Rating, Ratings};

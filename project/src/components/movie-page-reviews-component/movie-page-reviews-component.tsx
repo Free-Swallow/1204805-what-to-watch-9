@@ -1,22 +1,36 @@
 import CommentComponent from '../comment-component/comment-component';
-import {CommentsData} from '../../types/movies';
+import {useAppSelector, useAppDispatch} from '../../hooks';
+import {useEffect} from 'react';
+import {fetchCurrentMovieComments} from '../../store/api-actions';
+import {MIN_COMMENT} from '../../const';
 
-type MoviePageReviewsProps = {
-  comments: CommentsData;
-}
+function MoviePageReviewsComponent(): JSX.Element {
+  const {currentMovie: {id}, currentMovieComments} = useAppSelector(({DATA}) => DATA);
+  const dispatch = useAppDispatch();
 
-function MoviePageReviewsComponent({comments}: MoviePageReviewsProps): JSX.Element {
-  const randomComments = comments.slice(0, 3);
-  const randomCommentsSecond = comments.slice(-3);
+  const firstBlockComments =
+    currentMovieComments.length % 2 === 0
+      ? currentMovieComments.length / 2
+      : Math.ceil(currentMovieComments.length / 2);
+
+  const leftBlockComments = currentMovieComments.slice(
+    MIN_COMMENT,
+    firstBlockComments);
+  const rightBlockComments = currentMovieComments.slice(
+    firstBlockComments);
+
+  useEffect(() => {
+    dispatch(fetchCurrentMovieComments(id));
+  }, [dispatch, id]);
 
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
-        {randomComments.map((comment) => (<CommentComponent key={comment.id} commentData={comment} />))}
+        {leftBlockComments.map((comment) => (<CommentComponent key={comment.id} commentData={comment} />))}
       </div>
 
       <div className="film-card__reviews-col">
-        {randomCommentsSecond.map((comment) => (<CommentComponent key={comment.id} commentData={comment} />))}
+        {rightBlockComments.map((comment) => (<CommentComponent key={comment.id} commentData={comment} />))}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import {MoviesData} from './types/movies';
-import {basicGenre} from './const';
+import {defaultGenre} from './const';
 import {AuthorizationStatus} from './const';
 
 function getTimeFromMins(mins: number) {
@@ -19,7 +19,7 @@ function getSimilarMovies(movies: MoviesData, genre: string, count = movies.leng
   const moviesFiltered = [];
 
   for (const movie of movies) {
-    if (movie.genre === genre || genre === basicGenre) {
+    if (movie.genre === genre || genre === defaultGenre) {
       moviesFiltered.push(movie);
     }
 

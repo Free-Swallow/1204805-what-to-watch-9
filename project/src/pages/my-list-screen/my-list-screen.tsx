@@ -1,15 +1,26 @@
 import MoviesListComponent from '../../components/movies-list-component/movies-list-component';
 import FooterComponent from '../../components/footer-component/footer-component';
 import AuthComponent from '../../components/auth-component/auth-component';
-import {MoviesData} from '../../types/movies';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
+import {fetchFavoriteMovieList} from '../../store/api-actions';
+import {useAppSelector, useAppDispatch} from '../../hooks';
+import LoadingScreen from '../../components/loading-component/loading-component';
+import {useEffect} from 'react';
 
-type MyListScreenProps = {
-  movies: MoviesData;
-}
 
-function MyListScreen({movies}: MyListScreenProps): JSX.Element {
+function MyListScreen(): JSX.Element {
+  const {favoriteMoviesList, isMyListLoaded} = useAppSelector(({DATA}) => DATA);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchFavoriteMovieList());
+  }, [dispatch]);
+
+  if (!isMyListLoaded) {
+    return <LoadingScreen />;
+  }
+
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -30,7 +41,7 @@ function MyListScreen({movies}: MyListScreenProps): JSX.Element {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <MoviesListComponent movies={movies} />
+        <MoviesListComponent movies={favoriteMoviesList} />
 
       </section>
 

@@ -1,16 +1,24 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api, store} from './index';
-import {MoviesData} from '../types/movies';
-import {loadMovies, requireAuthorization, setError} from './action';
-import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../const';
+import {MoviesData, Movie, CommentsData, FavoriteMovie, CommentUser} from '../types/movies';
+import {redirectToRoute} from './action';
+import {
+  loadCurrentMovie,
+  loadMovies,
+  loadPromoMovie,
+  loadSimilarMovie,
+  loadComments,
+  isPushComment,
+  loadFavoriteMovie,
+  isPushFavoriteMovie
+} from './data-process/data-process';
+import {requireAuthorization} from './user-process/user-process';
+import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import {dropToken, saveToken} from '../services/token';
 import {errorHandle} from '../services/error-handle';
 
-// Асинхронные действия
-
-// Получение списка фильмов
 const fetchMoviesAction = createAsyncThunk(
   'data/films',
   async () => {
@@ -23,7 +31,6 @@ const fetchMoviesAction = createAsyncThunk(
   },
 );
 
-// Проверка наличия авторизации
 const checkAuthAction = createAsyncThunk(
   'user/auth',
   async () => {
@@ -37,7 +44,6 @@ const checkAuthAction = createAsyncThunk(
   },
 );
 
-// Авторизация
 const loginAction = createAsyncThunk(
   'user/login',
   async ({login: email, password}: AuthData) => {
@@ -45,6 +51,7 @@ const loginAction = createAsyncThunk(
       const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
       saveToken(token);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      store.dispatch(redirectToRoute(AppRoute.Main));
     } catch (error) {
       errorHandle(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
@@ -52,7 +59,6 @@ const loginAction = createAsyncThunk(
   },
 );
 
-// Выход из приложения
 const logoutAction = createAsyncThunk(
   'user/logout',
   async () => {
@@ -66,14 +72,108 @@ const logoutAction = createAsyncThunk(
   },
 );
 
-const clearErrorAction = createAsyncThunk(
-  'main/clear-error',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError('')),
-      TIMEOUT_SHOW_ERROR,
-    );
+const fetchCurrentMovieAction = createAsyncThunk(
+  'data/fetchSelectedFilms',
+  async (id: number) => {
+    try {
+      const {data} = await api.get<Movie>(`/films/${id}`);
+      store.dispatch(loadCurrentMovie(data));
+    } catch (error) {
+      errorHandle(error);
+    }
   },
 );
 
-export {fetchMoviesAction, checkAuthAction, loginAction, logoutAction, clearErrorAction};
+const fetchSimilarMoviesAction = createAsyncThunk(
+  'data/fetchSimilarFilms',
+  async (id: number) => {
+    try {
+      const {data} = await api.get<MoviesData>(
+        `${APIRoute.Movies}/${id}${APIRoute.similar}`,
+      );
+      store.dispatch(loadSimilarMovie(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+const fetchPromoMovieAction = createAsyncThunk(
+  'data/fetchPromoFilm',
+  async () => {
+    try {
+      const {data} = await api.get<Movie>(APIRoute.Promo);
+      store.dispatch(loadPromoMovie(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+const fetchCurrentMovieComments = createAsyncThunk(
+  'data/fetchSelectedFilmComments',
+  async (id: number) => {
+    try {
+      const {data} = await api.get<CommentsData>(`${APIRoute.comments}/${id}`);
+      store.dispatch(loadComments(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+const pushCurrentMovieComment = createAsyncThunk(
+  'user/postSelectedFilmComment',
+  async ({id, comment, rating}: CommentUser) => {
+    try {
+      await api.post<CommentUser>(`${APIRoute.comments}/${id}`, {
+        comment,
+        rating,
+      });
+      store.dispatch(isPushComment(true));
+    } catch (error) {
+      errorHandle(error);
+      store.dispatch(isPushComment(false));
+    }
+  },
+);
+
+const fetchFavoriteMovieList = createAsyncThunk(
+  'data/fetchFavoriteFilmsList',
+  async () => {
+    try {
+      const {data} = await api.get<MoviesData>(APIRoute.favorite);
+      store.dispatch(loadFavoriteMovie(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+const pushFavoriteMovie = createAsyncThunk(
+  'data/postFavoriteFilm',
+  async ({ id, favoriteStatus }: FavoriteMovie) => {
+    try {
+      const {data} = await api.post<Movie>(`${APIRoute.favorite}/${id}/${favoriteStatus}`);
+      store.dispatch(loadCurrentMovie(data));
+      store.dispatch(isPushFavoriteMovie(true));
+    } catch (error) {
+      errorHandle(error);
+      store.dispatch(isPushFavoriteMovie(false));
+    }
+  },
+);
+
+export {
+  fetchMoviesAction,
+  checkAuthAction,
+  loginAction,
+  logoutAction,
+  fetchCurrentMovieAction,
+  fetchPromoMovieAction,
+  fetchSimilarMoviesAction,
+  fetchCurrentMovieComments,
+  fetchFavoriteMovieList,
+  pushCurrentMovieComment,
+  pushFavoriteMovie
+};
