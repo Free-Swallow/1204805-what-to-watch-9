@@ -1,15 +1,11 @@
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {changeGenre, resetMoviesCount} from '../../store/action';
-import {initialStateProps} from '../../store/reducer';
+import {changeGenre, resetMoviesCount} from '../../store/content-process/content-process';
 import {nanoid} from '@reduxjs/toolkit';
-
-type TabsMoviesListProps = {
-  genres: string[];
-}
+import {TabsMoviesListProps} from '../../types/components';
 
 function TabsMoviesListComponent({genres}: TabsMoviesListProps):JSX.Element {
   const dispatch = useAppDispatch();
-  const currentGenre = useAppSelector((state: initialStateProps) => state.genre);
+  const currentGenre = useAppSelector(({CONTENT}) => CONTENT.genre);
   const isActive = (status: string) => status === currentGenre ? 'catalog__genres-item--active' : '';
 
   return (

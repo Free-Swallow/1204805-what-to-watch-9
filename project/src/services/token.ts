@@ -1,6 +1,5 @@
 const AUTH_TOKEN_KEY_NAME = 'wtw-token';
-
-type Token = string;
+import {Token} from '../types/components';
 
 const getToken = (): Token => {
   const token = localStorage.getItem(AUTH_TOKEN_KEY_NAME);

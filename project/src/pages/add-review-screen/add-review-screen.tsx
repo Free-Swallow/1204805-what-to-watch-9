@@ -1,44 +1,17 @@
 import AuthComponent from '../../components/auth-component/auth-component';
-import {CommentUser} from '../../types/movies';
-import {Link, useParams, useNavigate} from 'react-router-dom';
-import {APIRoute, RATING_DEFAULT, COMMENT_MAX_LENGTH, COMMENT_MIN_LENGTH, AppRoute} from '../../const';
-import {useState, ChangeEvent, useEffect, FormEvent} from 'react';
+import {Link, useParams} from 'react-router-dom';
+import {APIRoute, AppRoute} from '../../const';
+import {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchCurrentMovieAction} from '../../store/api-actions';
-import {isPushComment} from '../../store/action';
-import {pushCurrentMovieComment} from '../../store/api-actions';
-import {ratings} from '../../const';
+import {isPushComment} from '../../store/data-process/data-process';
+import AddReviewFormComponent from '../../components/add-review-form-component/add-review-form-component';
 
 function AddReviewScreen(): JSX.Element {
-  const [commentText, setCommentText] = useState('');
-  const [ratingMovie, setRatingMovie] = useState(RATING_DEFAULT);
   const {id} = useParams();
-  const navigate = useNavigate();
 
-  const {currentMovie: {name, posterImage, backgroundImage}, isCommentPush} = useAppSelector((state) => state);
+  const {currentMovie: {name, posterImage, backgroundImage}} = useAppSelector(({DATA}) => DATA);
   const dispatch = useAppDispatch();
-
-  const fieldChangeHandle = (evt: ChangeEvent<HTMLTextAreaElement>): void => {
-    const {value} = evt.target;
-
-    setCommentText(value);
-  };
-
-  const onSubmit = (comment: CommentUser) => {
-    dispatch(pushCurrentMovieComment(comment));
-  };
-
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-
-    onSubmit({
-      comment: commentText,
-      rating: ratingMovie,
-      id: Number(id),
-    });
-
-    navigate(`${APIRoute.Movies}/${id}${APIRoute.reviews}`);
-  };
 
   useEffect(() => {
     dispatch(fetchCurrentMovieAction(Number(id)));
@@ -83,28 +56,7 @@ function AddReviewScreen(): JSX.Element {
         </div>
       </div>
 
-      <div className="add-review">
-        <form action="#" className="add-review__form" onSubmit={handleSubmit}>
-          <div className="rating">
-            <div className="rating__stars">
-              {ratings.map(({rating}) => (
-                <>
-                  <input onChange={(evt) => setRatingMovie(Number(evt.target.value))} className="rating__input" key={rating} id={`star-${rating}`} type="radio" name="rating" value={rating}/>
-                  <label className="rating__label" htmlFor={`star-${rating}`}>Rating {ratingMovie}</label>
-                </>
-              ))}
-            </div>
-          </div>
-
-          <div className="add-review__text">
-            <textarea maxLength={COMMENT_MAX_LENGTH} minLength={COMMENT_MIN_LENGTH} value={commentText} onChange={(fieldChangeHandle)} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
-            <div className="add-review__submit">
-              <button className="add-review__btn" type="submit" disabled={ratingMovie === RATING_DEFAULT || commentText.length < COMMENT_MIN_LENGTH || commentText.length > COMMENT_MAX_LENGTH || isCommentPush}>Post</button>
-            </div>
-
-          </div>
-        </form>
-      </div>
+      <AddReviewFormComponent />
 
     </section>
   );

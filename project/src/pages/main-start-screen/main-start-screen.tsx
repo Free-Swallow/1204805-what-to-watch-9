@@ -3,16 +3,15 @@ import FooterComponent from '../../components/footer-component/footer-component'
 import MoviesListComponent from '../../components/movies-list-component/movies-list-component';
 import ButtonShowMoreComponent from '../../components/button-show-more-component/button-show-more-component';
 import {useAppSelector} from '../../hooks';
-import type {initialStateProps} from '../../store/reducer';
 import TabsMoviesListComponent from '../../components/tabs-movies-list-component/tabs-movies-list-component';
 import {defaultGenre} from '../../const';
 
 function MainStartScreen(): JSX.Element {
-  const moviesCount = useAppSelector((state: initialStateProps) => state.moviesCount);
-  const moviesList = useAppSelector((state: initialStateProps) => state.moviesList);
-  const currentGenre = useAppSelector((state: initialStateProps) => state.genre);
-  const genresList = useAppSelector((state: initialStateProps) => {
-    const moviesGenres = state.moviesList.map((movie) => movie.genre);
+  const moviesCount = useAppSelector(({CONTENT}) => CONTENT.moviesCount);
+  const moviesList = useAppSelector(({DATA}) => DATA.moviesList);
+  const currentGenre = useAppSelector(({CONTENT}) => CONTENT.genre);
+  const genresList = useAppSelector(({DATA}) => {
+    const moviesGenres = DATA.moviesList.map((movie) => movie.genre);
     return [defaultGenre, ...new Set(moviesGenres)];
   });
 

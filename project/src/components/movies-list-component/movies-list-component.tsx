@@ -1,9 +1,5 @@
-import {MoviesData} from '../../types/movies';
 import MovieCardComponent from '../movie-card-component/movie-card-component';
-
-type MoviesListProps = {
-  movies: MoviesData;
-}
+import {MoviesListProps} from '../../types/components';
 
 function MoviesListComponent({movies}: MoviesListProps): JSX.Element {
   return (

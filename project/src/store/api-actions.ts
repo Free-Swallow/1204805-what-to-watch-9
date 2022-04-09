@@ -1,27 +1,24 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api, store} from './index';
 import {MoviesData, Movie, CommentsData, FavoriteMovie, CommentUser} from '../types/movies';
+import {redirectToRoute} from './action';
 import {
   loadCurrentMovie,
   loadMovies,
-  redirectToRoute,
-  requireAuthorization,
   loadPromoMovie,
   loadSimilarMovie,
   loadComments,
   isPushComment,
   loadFavoriteMovie,
   isPushFavoriteMovie
-} from './action';
+} from './data-process/data-process';
+import {requireAuthorization} from './user-process/user-process'
 import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import {dropToken, saveToken} from '../services/token';
 import {errorHandle} from '../services/error-handle';
 
-// Асинхронные действия
-
-// Получение списка фильмов
 const fetchMoviesAction = createAsyncThunk(
   'data/films',
   async () => {
@@ -34,7 +31,6 @@ const fetchMoviesAction = createAsyncThunk(
   },
 );
 
-// Проверка наличия авторизации
 const checkAuthAction = createAsyncThunk(
   'user/auth',
   async () => {
@@ -48,7 +44,6 @@ const checkAuthAction = createAsyncThunk(
   },
 );
 
-// Авторизация
 const loginAction = createAsyncThunk(
   'user/login',
   async ({login: email, password}: AuthData) => {
@@ -64,7 +59,6 @@ const loginAction = createAsyncThunk(
   },
 );
 
-// Выход из приложения
 const logoutAction = createAsyncThunk(
   'user/logout',
   async () => {
@@ -108,7 +102,7 @@ const fetchPromoMovieAction = createAsyncThunk(
   'data/fetchPromoFilm',
   async () => {
     try {
-      const { data } = await api.get<Movie>(APIRoute.Promo);
+      const {data} = await api.get<Movie>(APIRoute.Promo);
       store.dispatch(loadPromoMovie(data));
     } catch (error) {
       errorHandle(error);
@@ -146,7 +140,7 @@ const pushCurrentMovieComment = createAsyncThunk(
 
 const fetchFavoriteMovieList = createAsyncThunk(
   'data/fetchFavoriteFilmsList',
-  async (_arg) => {
+  async () => {
     try {
       const {data} = await api.get<MoviesData>(APIRoute.favorite);
       store.dispatch(loadFavoriteMovie(data));
@@ -156,7 +150,7 @@ const fetchFavoriteMovieList = createAsyncThunk(
   },
 );
 
-export const pushFavoriteMovie = createAsyncThunk(
+const pushFavoriteMovie = createAsyncThunk(
   'data/postFavoriteFilm',
   async ({ id, favoriteStatus }: FavoriteMovie) => {
     try {
@@ -180,5 +174,6 @@ export {
   fetchSimilarMoviesAction,
   fetchCurrentMovieComments,
   fetchFavoriteMovieList,
-  pushCurrentMovieComment
+  pushCurrentMovieComment,
+  pushFavoriteMovie
 };

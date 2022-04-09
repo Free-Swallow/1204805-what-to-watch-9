@@ -15,13 +15,9 @@ import LoadingScreen from '../loading-component/loading-component';
 import HistoryRouter from '../history-route-component/history-route-component';
 import browserHistory from '../../browser-history';
 
-type AppProps = {
-  movies: MoviesData;
-}
-
-function App({movies}: AppProps): JSX.Element {
-  const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
-  const [firstMovie] = movies;
+function App(): JSX.Element {
+  const {isDataLoaded} = useAppSelector(({DATA}) => DATA);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
@@ -49,7 +45,7 @@ function App({movies}: AppProps): JSX.Element {
             <PrivateRoute
               authorizationStatus={authorizationStatus}
             >
-              <MyListScreen movies={movies}/>
+              <MyListScreen />
             </PrivateRoute>
           }
         />
@@ -61,10 +57,9 @@ function App({movies}: AppProps): JSX.Element {
             </PrivateRoute>
           }
         />
-        <Route
-          path={AppRoute.Player}
-          element={<PlayerScreen movie={firstMovie} />}
-        />
+        <Route path={AppRoute.Player}>
+          <Route path=":id/*" element={<PlayerScreen />} />
+        </Route>
         <Route
           path="*"
           element={<ErrorScreen link={AppRoute.Main} />}

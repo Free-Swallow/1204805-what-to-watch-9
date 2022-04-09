@@ -2,9 +2,10 @@ import CommentComponent from '../comment-component/comment-component';
 import {useAppSelector, useAppDispatch} from '../../hooks';
 import {useEffect} from 'react';
 import {fetchCurrentMovieComments} from '../../store/api-actions';
+import {MIN_COMMENT} from '../../const';
 
 function MoviePageReviewsComponent(): JSX.Element {
-  const {currentMovie: {id}, currentMovieComments} = useAppSelector((state) => state);
+  const {currentMovie: {id}, currentMovieComments} = useAppSelector(({DATA}) => DATA);
   const dispatch = useAppDispatch();
 
   const firstBlockComments =
@@ -13,7 +14,7 @@ function MoviePageReviewsComponent(): JSX.Element {
       : Math.ceil(currentMovieComments.length / 2);
 
   const leftBlockComments = currentMovieComments.slice(
-    0,
+    MIN_COMMENT,
     firstBlockComments);
   const rightBlockComments = currentMovieComments.slice(
     firstBlockComments);

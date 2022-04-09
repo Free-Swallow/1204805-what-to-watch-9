@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import {Movies} from './mock/films';
 import {Provider} from 'react-redux';
 import {store} from './store';
 import {fetchMoviesAction, checkAuthAction, fetchPromoMovieAction} from './store/api-actions';
@@ -16,9 +15,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ToastContainer />
-      <App
-        movies = {Movies}
-      />
+      <App/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

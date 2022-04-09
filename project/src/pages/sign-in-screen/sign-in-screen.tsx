@@ -1,15 +1,15 @@
 import FooterComponent from '../../components/footer-component/footer-component';
-import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
-import {useRef, FormEvent} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {useAppDispatch} from '../../hooks';
+import {Link, useNavigate} from 'react-router-dom';
+import {AppRoute, AuthorizationStatus} from '../../const';
+import {FormEvent, useRef} from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
 
 function SignInScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -20,8 +20,14 @@ function SignInScreen(): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    const validationPassword = /^.*(?=.{2,})(?=.*\d)(?=.*[a-zA-Z]).*$/i;
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
+    if (loginRef.current !== null &&
+      passwordRef.current !== null &&
+      loginRef.current.value.length &&
+      passwordRef.current.value.length &&
+      validationPassword.test(String(passwordRef.current.value).toLowerCase())
+    ) {
       onSubmit({
         login: loginRef.current.value,
         password: passwordRef.current.value,
@@ -29,6 +35,10 @@ function SignInScreen(): JSX.Element {
       navigate(-1);
     }
   };
+
+  if (authorizationStatus === AuthorizationStatus.Auth) {
+    navigate(AppRoute.Main);
+  }
 
   return (
     <div className="user-page">

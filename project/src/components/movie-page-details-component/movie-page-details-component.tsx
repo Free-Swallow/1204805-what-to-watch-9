@@ -2,7 +2,7 @@ import {getTimeFromMins} from '../../utils';
 import {useAppSelector} from '../../hooks';
 
 function MoviePageDetailsComponent(): JSX.Element {
-  const {currentMovie: {director,starring, runTime, genre, released}} = useAppSelector((state) => state);
+  const {currentMovie: {director,starring, runTime, genre, released}} = useAppSelector(({DATA}) => DATA);
 
   return (
     <div className="film-card__text film-card__row">

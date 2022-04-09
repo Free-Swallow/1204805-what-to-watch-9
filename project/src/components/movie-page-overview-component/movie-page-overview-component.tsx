@@ -2,7 +2,7 @@ import {useAppSelector} from '../../hooks';
 import {RatingNumber, RatingText} from '../../const';
 
 function MoviePageOverviewComponent(): JSX.Element {
-  const {currentMovie: {rating, scoresCount, description, director,starring}} = useAppSelector((state) => state);
+  const {currentMovie: {rating, scoresCount, description, director,starring}} = useAppSelector(({DATA}) => DATA);
 
   const getRating = (ratingMovie: number) => {
     if (ratingMovie <= RatingNumber.Bad) {

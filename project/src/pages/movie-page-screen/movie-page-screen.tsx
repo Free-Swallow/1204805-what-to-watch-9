@@ -7,27 +7,27 @@ import {MoviesData} from '../../types/movies';
 import {Link} from 'react-router-dom';
 import {AppRoute, MIN_MOVIES_SIMILAR, MAX_MOVIES_SIMILAR, AuthorizationStatus, APIRoute} from '../../const';
 import {useAppSelector, useAppDispatch} from '../../hooks';
-import {initialStateProps} from '../../store/reducer';
 import {useParams} from 'react-router-dom';
 import {fetchCurrentMovieAction, fetchSimilarMoviesAction} from '../../store/api-actions';
 import {useEffect, useMemo} from 'react';
 import LoadingScreen from '../../components/loading-component/loading-component';
+import PlayButtonComponent from '../../components/play-button-component/play-button-component';
+import MyListButtonComponent from '../../components/my-list-button-component/my-list-button-component';
 
 function MoviePageScreen(): JSX.Element {
-
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
   const {
     currentMovie,
     similarMovies,
     isCurrentMovieLoaded,
-    authorizationStatus,
-  } = useAppSelector((state: initialStateProps) => state);
-
+  } = useAppSelector(({DATA}) => DATA);
   const {
     name,
     genre,
     released,
     posterImage,
     backgroundImage,
+    isFavorite
   } = currentMovie;
 
   const {id} = useParams();
@@ -79,18 +79,9 @@ function MoviePageScreen(): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
+                <PlayButtonComponent id={Number(id)} />
+                <MyListButtonComponent id={Number(id)} isFavorite={isFavorite} />
+
                 {authorizationStatus === AuthorizationStatus.Auth ? <Link  to={`${APIRoute.Movies}/${id}${APIRoute.review}`} className="btn film-card__button">Add review</Link> : null}
               </div>
             </div>
