@@ -12,7 +12,7 @@ import {
   loadFavoriteMovie,
   isPushFavoriteMovie
 } from './data-process/data-process';
-import {requireAuthorization} from './user-process/user-process'
+import {requireAuthorization} from './user-process/user-process';
 import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';

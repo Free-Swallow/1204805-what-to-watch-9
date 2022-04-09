@@ -1,6 +1,6 @@
 import {store} from '../store';
 import {AuthorizationStatus} from '../const';
-import {CommentsData, Movie, MoviesData} from "./movies";
+import {CommentsData, Movie, MoviesData} from './movies';
 
 type UserProcess = {
   authorizationStatus: AuthorizationStatus

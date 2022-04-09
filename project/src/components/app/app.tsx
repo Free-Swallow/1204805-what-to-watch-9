@@ -8,7 +8,6 @@ import SignInScreen from '../../pages/sign-in-screen/sign-in-screen';
 import MyListScreen from '../../pages/my-list-screen/my-list-screen';
 import MoviePageScreen from '../../pages/movie-page-screen/movie-page-screen';
 import PrivateRoute from '../private-route/private-route';
-import {MoviesData} from '../../types/movies';
 import {useAppSelector} from '../../hooks';
 import {isCheckedAuth} from '../../utils';
 import LoadingScreen from '../loading-component/loading-component';

@@ -18,13 +18,13 @@ function PlayerScreen(): JSX.Element {
   const navigate = useNavigate();
 
   const {id} = useParams();
-  const progressVideoStyle: {left: string} = {left: `${currentTime}%`}
+  const progressVideoStyle: {left: string} = {left: `${currentTime}%`};
 
   const handleVideoPlay = () => {
     setIsPlaying(!isPlaying);
   };
 
-  const movieDuration = dayjs.duration(videoDuration || runTime, 'seconds',);
+  const movieDuration = dayjs.duration(videoDuration || runTime, 'seconds');
   const convertDuration = movieDuration.asHours() >= 1 ? movieDuration.format('-HH:mm:ss') : movieDuration.format('-mm:ss');
 
   const handleTimeChange = () => {
@@ -82,16 +82,7 @@ function PlayerScreen(): JSX.Element {
 
         <div className="player__controls-row">
           <button onClick={handleVideoPlay} type="button" className="player__play">
-            {isPlaying ? <>
-              <svg viewBox="0 0 14 21" width="14" height="21">
-                <use xlinkHref="#pause"></use>
-              </svg>
-              <span>Pause</span>
-            </> : <><svg viewBox="0 0 19 19" width="19" height="19">
-              <use xlinkHref="#play-s"></use>
-            </svg>
-              <span>Play</span>
-            </>}
+            {isPlaying ? <><svg viewBox="0 0 14 21" width="14" height="21"><use xlinkHref="#pause"></use></svg><span>Pause</span></> : <><svg viewBox="0 0 19 19" width="19" height="19"><use xlinkHref="#play-s"></use></svg><span>Play</span></>}
           </button>
           <div className="player__name">{name}</div>
 

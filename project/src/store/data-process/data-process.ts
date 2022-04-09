@@ -58,7 +58,7 @@ const {
   isPushFavoriteMovie,
   loadMovies,
   loadComments,
-  isPushComment
+  isPushComment,
 } = dataProcess.actions;
 
 export {

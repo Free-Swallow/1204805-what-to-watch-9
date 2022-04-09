@@ -34,8 +34,6 @@ type MyListButtonProps = {
   isFavorite: boolean;
 }
 
-type Token = string;
-
 export type {
   MovieCardProps,
   MoviesListProps,
@@ -43,6 +41,5 @@ export type {
   TabsMoviesListProps,
   VideoPlayerProps,
   ErrorScreenProps,
-  Token,
   MyListButtonProps
 };

@@ -27,7 +27,7 @@ function MoviePageScreen(): JSX.Element {
     released,
     posterImage,
     backgroundImage,
-    isFavorite
+    isFavorite,
   } = currentMovie;
 
   const {id} = useParams();
