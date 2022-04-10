@@ -8,11 +8,17 @@ import classNames from 'classnames';
 function TabsMovieComponent(): JSX.Element {
   const {pathname} = useLocation();
 
+  const checkActiveTab = () => {
+    if (pathname.includes(AppRoute.Overview) || !pathname.includes(AppRoute.Details) && !pathname.includes(AppRoute.Reviews)) {
+      return 'film-nav__item--active';
+    }
+  };
+
   return (
     <div className="film-card__desc">
       <nav className="film-nav film-card__nav">
         <ul className="film-nav__list">
-          <li className={classNames('film-nav__item', {'film-nav__item--active' : pathname.includes(AppRoute.Overview)})}>
+          <li className={classNames('film-nav__item', checkActiveTab())}>
             <Link to={AppRoute.Overview} className="film-nav__link">Overview</Link>
           </li>
           <li className={classNames('film-nav__item', {'film-nav__item--active' : pathname.includes(AppRoute.Details)})}>
