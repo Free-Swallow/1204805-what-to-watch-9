@@ -89,7 +89,7 @@ const fetchSimilarMoviesAction = createAsyncThunk(
   async (id: number) => {
     try {
       const {data} = await api.get<MoviesData>(
-        `${APIRoute.Movies}/${id}${APIRoute.similar}`,
+        `${APIRoute.Movies}/${id}${APIRoute.Similar}`,
       );
       store.dispatch(loadSimilarMovie(data));
     } catch (error) {
@@ -114,7 +114,7 @@ const fetchCurrentMovieComments = createAsyncThunk(
   'data/fetchSelectedFilmComments',
   async (id: number) => {
     try {
-      const {data} = await api.get<CommentsData>(`${APIRoute.comments}/${id}`);
+      const {data} = await api.get<CommentsData>(`${APIRoute.Comments}/${id}`);
       store.dispatch(loadComments(data));
     } catch (error) {
       errorHandle(error);
@@ -126,7 +126,7 @@ const pushCurrentMovieComment = createAsyncThunk(
   'user/postSelectedFilmComment',
   async ({id, comment, rating}: CommentUser) => {
     try {
-      await api.post<CommentUser>(`${APIRoute.comments}/${id}`, {
+      await api.post<CommentUser>(`${APIRoute.Comments}/${id}`, {
         comment,
         rating,
       });
@@ -142,7 +142,7 @@ const fetchFavoriteMovieList = createAsyncThunk(
   'data/fetchFavoriteFilmsList',
   async () => {
     try {
-      const {data} = await api.get<MoviesData>(APIRoute.favorite);
+      const {data} = await api.get<MoviesData>(APIRoute.Favorite);
       store.dispatch(loadFavoriteMovie(data));
     } catch (error) {
       errorHandle(error);
@@ -154,7 +154,7 @@ const pushFavoriteMovie = createAsyncThunk(
   'data/postFavoriteFilm',
   async ({ id, favoriteStatus }: FavoriteMovie) => {
     try {
-      const {data} = await api.post<Movie>(`${APIRoute.favorite}/${id}/${favoriteStatus}`);
+      const {data} = await api.post<Movie>(`${APIRoute.Favorite}/${id}/${favoriteStatus}`);
       store.dispatch(loadCurrentMovie(data));
       store.dispatch(isPushFavoriteMovie(true));
     } catch (error) {

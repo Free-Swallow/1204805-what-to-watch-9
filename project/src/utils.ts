@@ -31,7 +31,7 @@ function getSimilarMovies(movies: MoviesData, genre: string, count = movies.leng
   return moviesFiltered;
 }
 
-const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
+const isCheckAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
 
-export {getTimeFromMins, getSimilarMovies, isCheckedAuth};
+export {getTimeFromMins, getSimilarMovies, isCheckAuth};

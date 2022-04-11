@@ -5,6 +5,7 @@ import {FormEvent, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
+import {toast} from 'react-toastify';
 
 function SignInScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -18,9 +19,21 @@ function SignInScreen(): JSX.Element {
     dispatch(loginAction(authData));
   };
 
+  const validationPassword = /^.*(?=.{2,})(?=.*\d)(?=.*[a-zA-Z]).*$/i;
+
+
+  const checkValidatePassword = (value: string) => {
+    if (!validationPassword.test(String(value).toLowerCase())) {
+      toast.error('Некорректный пароль. Должен содержать минимум одну букву и одну цифру.');
+    }
+  };
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    const validationPassword = /^.*(?=.{2,})(?=.*\d)(?=.*[a-zA-Z]).*$/i;
+
+    if (passwordRef.current !== null) {
+      checkValidatePassword(passwordRef.current.value);
+    }
 
     if (loginRef.current !== null &&
       passwordRef.current !== null &&
@@ -28,13 +41,16 @@ function SignInScreen(): JSX.Element {
       passwordRef.current.value.length &&
       validationPassword.test(String(passwordRef.current.value).toLowerCase())
     ) {
+      passwordRef.current.reportValidity();
       onSubmit({
         login: loginRef.current.value,
         password: passwordRef.current.value,
       });
+
       navigate(-1);
     }
   };
+
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
     navigate(AppRoute.Main);

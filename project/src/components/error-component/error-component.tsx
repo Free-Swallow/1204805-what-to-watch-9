@@ -1,9 +1,9 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {ErrorScreenProps} from '../../types/components';
-import {errorLinkStyle} from '../../style/error-link-style';
+import {errorLinkStyle} from './error-link-style';
 
-function ErrorScreen({link}: ErrorScreenProps): JSX.Element {
+function ErrorComponent({link}: ErrorScreenProps): JSX.Element {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -29,4 +29,4 @@ function ErrorScreen({link}: ErrorScreenProps): JSX.Element {
   );
 }
 
-export default ErrorScreen;
+export default ErrorComponent;

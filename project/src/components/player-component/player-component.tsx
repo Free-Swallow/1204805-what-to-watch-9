@@ -8,10 +8,10 @@ import LoadingScreen from '../../components/loading-component/loading-component'
 import {CURRENT_TIME_MOVIE} from '../../const';
 dayjs.extend(duration);
 
-function PlayerScreen(): JSX.Element {
+function PlayerComponent(): JSX.Element {
   const {currentMovie: {videoLink, previewVideoLink, runTime, name}, isCurrentMovieLoaded} = useAppSelector(({DATA}) => DATA);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [currentTime, setCurrentTime] = useState<number>(CURRENT_TIME_MOVIE);
   const [videoDuration, setVideoDuration] = useState(videoRef.current?.duration);
   const dispatch = useAppDispatch();
@@ -98,4 +98,4 @@ function PlayerScreen(): JSX.Element {
   );
 }
 
-export default PlayerScreen;
+export default PlayerComponent;

@@ -11,7 +11,7 @@ const contentProcess = createSlice({
   name: NameSpace.Content,
   initialState,
   reducers: {
-    changeGenre: (state, action) => {
+    changeGenre: (state, action: {payload: string}) => {
       state.genre = action.payload;
     },
     changeMoviesCount: (state) => {

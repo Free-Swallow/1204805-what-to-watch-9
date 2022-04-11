@@ -9,7 +9,8 @@ enum AppRoute {
   Player = '/player',
   Overview = 'overview',
   Details = 'details',
-  Reviews = 'reviews'
+  Reviews = 'reviews',
+  Review = '/review',
 }
 
 enum AuthorizationStatus {
@@ -23,11 +24,11 @@ enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   Promo = '/promo',
-  similar = '/similar',
-  comments = '/comments',
-  favorite = '/favorite',
-  review = '/review',
-  reviews = '/reviews',
+  Similar = '/similar',
+  Comments = '/comments',
+  Favorite = '/favorite',
+  Review = '/review',
+  Reviews = '/reviews',
 }
 
 enum HttpCode {

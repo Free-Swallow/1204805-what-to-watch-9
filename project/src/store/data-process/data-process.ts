@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace} from '../../const';
 import {DataProcess} from '../../types/state';
+import {CommentsData, Movie, MoviesData} from '../../types/movies';
 
 const initialState: DataProcess = {
   moviesList: [],
@@ -20,31 +21,31 @@ const dataProcess = createSlice({
   name: NameSpace.Data,
   initialState,
   reducers: {
-    loadMovies: (state, action) => {
+    loadMovies: (state, action: {payload: MoviesData}) => {
       state.moviesList = action.payload;
       state.isDataLoaded = true;
     },
-    loadCurrentMovie: (state, action) => {
+    loadCurrentMovie: (state, action: {payload: Movie}) => {
       state.currentMovie = action.payload;
       state.isCurrentMovieLoaded = true;
     },
-    loadPromoMovie: (state, action) => {
+    loadPromoMovie: (state, action: {payload: Movie}) => {
       state.promo = action.payload;
     },
-    loadSimilarMovie: (state, action) => {
+    loadSimilarMovie: (state, action: {payload: MoviesData}) => {
       state.similarMovies = action.payload;
     },
-    loadComments: (state, action) => {
+    loadComments: (state, action: {payload: CommentsData}) => {
       state.currentMovieComments = action.payload;
     },
-    isPushComment: (state, action) => {
+    isPushComment: (state, action: {payload: boolean}) => {
       state.isCommentPush = action.payload;
     },
-    loadFavoriteMovie: (state, action) => {
+    loadFavoriteMovie: (state, action: {payload: MoviesData}) => {
       state.favoriteMoviesList = action.payload;
       state.isMyListLoaded = true;
     },
-    isPushFavoriteMovie: (state, action) => {
+    isPushFavoriteMovie: (state, action: {payload: boolean}) => {
       state.isFavoriteMoviePush = action.payload;
     },
   },

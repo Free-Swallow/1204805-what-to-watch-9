@@ -1,15 +1,15 @@
 import {Route, Routes} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
-import PlayerScreen from '../../pages/player-screen/player-screen';
-import ErrorScreen from '../../pages/error-screen/error-screen';
+import PlayerComponent from '../player-component/player-component';
+import ErrorComponent from '../error-component/error-component';
 import MainStartScreen from '../../pages/main-start-screen/main-start-screen';
 import SignInScreen from '../../pages/sign-in-screen/sign-in-screen';
 import MyListScreen from '../../pages/my-list-screen/my-list-screen';
 import MoviePageScreen from '../../pages/movie-page-screen/movie-page-screen';
 import PrivateRoute from '../private-route/private-route';
 import {useAppSelector} from '../../hooks';
-import {isCheckedAuth} from '../../utils';
+import {isCheckAuth} from '../../utils';
 import LoadingScreen from '../loading-component/loading-component';
 import HistoryRouter from '../history-route-component/history-route-component';
 import browserHistory from '../../browser-history';
@@ -18,7 +18,7 @@ function App(): JSX.Element {
   const {isDataLoaded} = useAppSelector(({DATA}) => DATA);
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
 
-  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
+  if (isCheckAuth(authorizationStatus) || !isDataLoaded) {
     return (
       <LoadingScreen />
     );
@@ -57,11 +57,11 @@ function App(): JSX.Element {
           }
         />
         <Route path={AppRoute.Player}>
-          <Route path=":id/*" element={<PlayerScreen />} />
+          <Route path=":id/*" element={<PlayerComponent />} />
         </Route>
         <Route
           path="*"
-          element={<ErrorScreen link={AppRoute.Main} />}
+          element={<ErrorComponent link={AppRoute.Main} />}
         />
       </Routes>
     </HistoryRouter>

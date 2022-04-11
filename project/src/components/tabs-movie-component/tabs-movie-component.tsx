@@ -9,7 +9,7 @@ function TabsMovieComponent(): JSX.Element {
   const {pathname} = useLocation();
 
   const checkActiveTab = () => {
-    if (pathname.includes(AppRoute.Overview) || !pathname.includes(AppRoute.Details) && !pathname.includes(AppRoute.Reviews)) {
+    if (!pathname.includes(AppRoute.Details) && !pathname.includes(AppRoute.Reviews)) {
       return 'film-nav__item--active';
     }
   };

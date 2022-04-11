@@ -1,4 +1,4 @@
-import {loadingComponentStyle} from '../../style/loading-component-style';
+import {loadingComponentStyle} from './loading-component-style';
 
 function LoadingScreen(): JSX.Element {
   return (

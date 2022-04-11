@@ -1,6 +1,6 @@
 import AuthComponent from '../../components/auth-component/auth-component';
 import {Link, useParams} from 'react-router-dom';
-import {APIRoute, AppRoute} from '../../const';
+import {AppRoute} from '../../const';
 import {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchCurrentMovieAction} from '../../store/api-actions';
@@ -39,10 +39,10 @@ function AddReviewScreen(): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={`${APIRoute.Movies}/${id}`} className="breadcrumbs__link">{name}</Link>
+                <Link to={`${AppRoute.Film}/${id}`} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <Link to={`${APIRoute.Movies}/${id}${APIRoute.reviews}`} className="breadcrumbs__link">Add review</Link>
+                <Link to={`${AppRoute.Film}/${id}/${AppRoute.Reviews}`} className="breadcrumbs__link">Add review</Link>
               </li>
             </ul>
           </nav>

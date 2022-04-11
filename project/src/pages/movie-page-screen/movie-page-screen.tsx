@@ -5,7 +5,7 @@ import MoviesListComponent from '../../components/movies-list-component/movies-l
 import TabsMovieComponent from '../../components/tabs-movie-component/tabs-movie-component';
 import {MoviesData} from '../../types/movies';
 import {Link} from 'react-router-dom';
-import {AppRoute, MIN_MOVIES_SIMILAR, MAX_MOVIES_SIMILAR, AuthorizationStatus, APIRoute} from '../../const';
+import {AppRoute, MIN_MOVIES_SIMILAR, MAX_MOVIES_SIMILAR, AuthorizationStatus} from '../../const';
 import {useAppSelector, useAppDispatch} from '../../hooks';
 import {useParams} from 'react-router-dom';
 import {fetchCurrentMovieAction, fetchSimilarMoviesAction} from '../../store/api-actions';
@@ -82,7 +82,7 @@ function MoviePageScreen(): JSX.Element {
                 <PlayButtonComponent id={Number(id)} />
                 <MyListButtonComponent id={Number(id)} isFavorite={isFavorite} />
 
-                {authorizationStatus === AuthorizationStatus.Auth ? <Link  to={`${APIRoute.Movies}/${id}${APIRoute.review}`} className="btn film-card__button">Add review</Link> : null}
+                {authorizationStatus === AuthorizationStatus.Auth ? <Link  to={`${AppRoute.Film}/${id}${AppRoute.Review}`} className="btn film-card__button">Add review</Link> : null}
               </div>
             </div>
           </div>

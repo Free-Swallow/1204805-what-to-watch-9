@@ -1,5 +1,5 @@
 import {CommentUser} from '../../types/movies';
-import {APIRoute, COMMENT_MAX_LENGTH, COMMENT_MIN_LENGTH, RATING_DEFAULT, ratings} from '../../const';
+import {AppRoute, COMMENT_MAX_LENGTH, COMMENT_MIN_LENGTH, RATING_DEFAULT, ratings} from '../../const';
 import {ChangeEvent, FormEvent, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks';
@@ -33,7 +33,7 @@ function AddReviewFormComponent() {
       id: Number(id),
     });
 
-    navigate(`${APIRoute.Movies}/${id}${APIRoute.reviews}`);
+    navigate(`${AppRoute.Film}/${id}/${AppRoute.Reviews}`);
   };
 
   return (
