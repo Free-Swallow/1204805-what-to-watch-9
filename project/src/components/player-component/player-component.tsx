@@ -11,7 +11,7 @@ dayjs.extend(duration);
 function PlayerComponent(): JSX.Element {
   const {currentMovie: {videoLink, previewVideoLink, runTime, name}, isCurrentMovieLoaded} = useAppSelector(({DATA}) => DATA);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(CURRENT_TIME_MOVIE);
   const [videoDuration, setVideoDuration] = useState(videoRef.current?.duration);
   const dispatch = useAppDispatch();
@@ -43,9 +43,9 @@ function PlayerComponent(): JSX.Element {
     }
   };
 
-  const handleExit = () => {
-    navigate(-1);
-  };
+  const handleExit = () => navigate(-1);
+
+  const handleClickFullScreen = () => videoRef.current?.requestFullscreen();
 
   useEffect(() => {
     dispatch(fetchCurrentMovieAction(Number(id)));
@@ -61,13 +61,25 @@ function PlayerComponent(): JSX.Element {
     videoRef.current.pause();
   }, [dispatch, id, isPlaying]);
 
+  useEffect(() => {
+    if (videoRef.current !== null) {
+      videoRef.current.onloadeddata = () => setIsPlaying(true);
+    }
+    return () => {
+      if (videoRef.current !== null) {
+        videoRef.current.onloadeddata = null;
+        videoRef.current = null;
+      }
+    };
+  }, [dispatch, id]);
+
   if (!isCurrentMovieLoaded) {
     return <LoadingScreen />;
   }
 
   return (
     <div className="player">
-      <video onTimeUpdate={handleTimeChange} ref={videoRef} src={videoLink} className="player__video" poster={previewVideoLink}></video>
+      <video data-testid="video" onTimeUpdate={handleTimeChange} ref={videoRef} src={videoLink} className="player__video" poster={previewVideoLink}></video>
 
       <button onClick={handleExit} type="button" className="player__exit">Exit</button>
 
@@ -81,12 +93,12 @@ function PlayerComponent(): JSX.Element {
         </div>
 
         <div className="player__controls-row">
-          <button onClick={handleVideoPlay} type="button" className="player__play">
+          <button data-testid={`play-set-${isPlaying}`} onClick={handleVideoPlay} type="button" className="player__play">
             {isPlaying ? <><svg viewBox="0 0 14 21" width="14" height="21"><use xlinkHref="#pause"></use></svg><span>Pause</span></> : <><svg viewBox="0 0 19 19" width="19" height="19"><use xlinkHref="#play-s"></use></svg><span>Play</span></>}
           </button>
           <div className="player__name">{name}</div>
 
-          <button onClick={() => videoRef.current?.requestFullscreen()} type="button" className="player__full-screen">
+          <button onClick={handleClickFullScreen} type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen"></use>
             </svg>

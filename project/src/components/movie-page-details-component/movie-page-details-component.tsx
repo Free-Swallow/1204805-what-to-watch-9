@@ -1,8 +1,10 @@
-import {getTimeFromMins} from '../../utils';
+import {getTimeFromMins} from '../../utils/utils';
 import {useAppSelector} from '../../hooks';
+import {getCurrentMovie} from '../../store/data-process/selectors';
 
 function MoviePageDetailsComponent(): JSX.Element {
-  const {currentMovie: {director,starring, runTime, genre, released}} = useAppSelector(({DATA}) => DATA);
+  const currentMovie = useAppSelector(getCurrentMovie);
+  const {director,starring, runTime, genre, released} = currentMovie;
 
   return (
     <div className="film-card__text film-card__row">

@@ -3,9 +3,10 @@ import {useNavigate} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {pushFavoriteMovie} from '../../store/api-actions';
+import {getAuthStatus} from '../../store/user-process/selectors';
 
 function MyListButtonComponent({id, isFavorite}: MyListButtonProps): JSX.Element {
-  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const authorizationStatus = useAppSelector(getAuthStatus);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -19,13 +20,13 @@ function MyListButtonComponent({id, isFavorite}: MyListButtonProps): JSX.Element
   };
 
   return (
-    <button onClick={handleChangeFavorite} className="btn btn--list film-card__button" type="button">
+    <button data-testid="my-list-button" onClick={handleChangeFavorite} className="btn btn--list film-card__button" type="button">
       {isFavorite ? (
-        <svg viewBox="0 0 18 14" width="18" height="14">
+        <svg data-testid="in-list" viewBox="0 0 18 14" width="18" height="14">
           <use xlinkHref="#in-list"></use>
         </svg>
       ) : (
-        <svg viewBox="0 0 19 20" width="19" height="20">
+        <svg data-testid="add" viewBox="0 0 19 20" width="19" height="20">
           <use xlinkHref="#add"></use>
         </svg>
       )}

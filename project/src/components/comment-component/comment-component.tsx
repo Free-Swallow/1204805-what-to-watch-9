@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 type CommentProps = {
   commentData: Comment;
 }
+
 function CommentComponent({commentData}: CommentProps): JSX.Element {
   const {user: {name}, comment, date, rating} = commentData;
   const convertTime = (commentDate: string) =>

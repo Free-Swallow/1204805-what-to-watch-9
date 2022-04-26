@@ -1,9 +1,10 @@
 import {CommentUser} from '../../types/movies';
 import {AppRoute, COMMENT_MAX_LENGTH, COMMENT_MIN_LENGTH, RATING_DEFAULT, ratings} from '../../const';
-import {ChangeEvent, FormEvent, useState} from 'react';
+import {ChangeEvent, FormEvent, Fragment, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {pushCurrentMovieComment} from '../../store/api-actions';
+import {getStatePushComment} from '../../store/data-process/selectors';
 
 function AddReviewFormComponent() {
   const [commentText, setCommentText] = useState('');
@@ -11,7 +12,7 @@ function AddReviewFormComponent() {
   const {id} = useParams();
   const navigate = useNavigate();
 
-  const {isCommentPush} = useAppSelector(({DATA}) => DATA);
+  const isCommentPush = useAppSelector(getStatePushComment);
   const dispatch = useAppDispatch();
 
   const fieldChangeHandle = (evt: ChangeEvent<HTMLTextAreaElement>): void => {
@@ -42,18 +43,18 @@ function AddReviewFormComponent() {
         <div className="rating">
           <div className="rating__stars">
             {ratings.map(({rating}) => (
-              <>
-                <input onChange={(evt) => setRatingMovie(Number(evt.target.value))} className="rating__input" key={rating} id={`star-${rating}`} type="radio" name="rating" value={rating}/>
-                <label className="rating__label" htmlFor={`star-${rating}`}>Rating {ratingMovie}</label>
-              </>
+              <Fragment key={`list-star-${rating}`}>
+                <input key={`input-${rating}`} data-testid={`ratings-${rating}`} onChange={(evt) => setRatingMovie(Number(evt.target.value))} className="rating__input" id={`star-${rating}`} type="radio" name="rating" value={rating}/>
+                <label key={`label-${rating}`} className="rating__label" htmlFor={`star-${rating}`}>Rating {ratingMovie}</label>
+              </Fragment>
             ))}
           </div>
         </div>
 
         <div className="add-review__text">
-          <textarea maxLength={COMMENT_MAX_LENGTH} minLength={COMMENT_MIN_LENGTH} value={commentText} onChange={(fieldChangeHandle)} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
+          <textarea data-testid="textarea" maxLength={COMMENT_MAX_LENGTH} minLength={COMMENT_MIN_LENGTH} value={commentText} onChange={(fieldChangeHandle)} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit" disabled={ratingMovie === RATING_DEFAULT || commentText.length < COMMENT_MIN_LENGTH || commentText.length > COMMENT_MAX_LENGTH || isCommentPush}>Post</button>
+            <button data-testid="add-review-button" className="add-review__btn" type="submit" disabled={ratingMovie === RATING_DEFAULT || commentText.length < COMMENT_MIN_LENGTH || commentText.length > COMMENT_MAX_LENGTH || isCommentPush}>Post</button>
           </div>
 
         </div>

@@ -1,22 +1,9 @@
-import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
-import {useAppDispatch} from '../../hooks';
-import {resetMoviesCount} from '../../store/content-process/content-process';
+import LogoComponent from '../logo-component/logo-component';
 
 function FooterComponent(): JSX.Element {
-  const dispatch = useAppDispatch();
-
-  const handleClick = () => dispatch(resetMoviesCount());
-
   return (
     <footer className="page-footer">
-      <div className="logo">
-        <Link onClick={handleClick} to={AppRoute.Main} className="logo__link logo__link--light">
-          <span className="logo__letter logo__letter--1">W</span>
-          <span className="logo__letter logo__letter--2">T</span>
-          <span className="logo__letter logo__letter--3">W</span>
-        </Link>
-      </div>
+      <LogoComponent classAttribute={'logo__link--light'} />
 
       <div className="copyright">
         <p>© 2019 What to watch Ltd.</p>

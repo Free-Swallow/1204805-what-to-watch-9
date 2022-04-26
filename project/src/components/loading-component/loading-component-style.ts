@@ -1,6 +1,7 @@
 const loadingComponentStyle = {
-  marginTop: '150px',
+  marginTop: '80px',
   fontSize: '60px',
+  fontFamily: 'Arial, Helvetica, sans-serif',
 };
 
 export {loadingComponentStyle};

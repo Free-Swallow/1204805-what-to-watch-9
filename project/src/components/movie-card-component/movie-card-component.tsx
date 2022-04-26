@@ -9,7 +9,7 @@ import {resetMoviesCount} from '../../store/content-process/content-process';
 function MovieCardComponent({movie}: MovieCardProps): JSX.Element {
   const {name, id, videoLink, previewImage} = movie;
   const navigate = useNavigate();
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
   const handleClick = () => {
@@ -27,12 +27,12 @@ function MovieCardComponent({movie}: MovieCardProps): JSX.Element {
   }
 
   return (
-    <article className="small-film-card catalog__films-card" onClick={() => {handleClick();}} onMouseOver={() => {handleMouseOver();}} onMouseLeave={() => {handleMouseLeave();}}>
-      <div className="small-film-card__image">
+    <article data-testid="movie-card" className="small-film-card catalog__films-card" onClick={handleClick} onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
+      <div data-testid={isPlaying} className="small-film-card__image">
         <VideoPlayerComponent isPlaying={isPlaying} src={videoLink} srcPoster={previewImage}/>
       </div>
       <h3 className="small-film-card__title">
-        <Link to={`${APIRoute.Movies}/${id}`} className="small-film-card__link">{name}</Link>
+        <Link data-testid="card-link" to={`${APIRoute.Movies}/${id}`} className="small-film-card__link">{name}</Link>
       </h3>
     </article>
   );

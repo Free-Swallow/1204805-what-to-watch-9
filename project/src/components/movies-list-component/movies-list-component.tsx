@@ -3,7 +3,7 @@ import {MoviesListProps} from '../../types/components';
 
 function MoviesListComponent({movies}: MoviesListProps): JSX.Element {
   return (
-    <div className="catalog__films-list">
+    <div data-testid="movie-list" className="catalog__films-list">
       {movies.map((movie) => (<MovieCardComponent key={movie.id} movie={movie} />))}
     </div>
   );

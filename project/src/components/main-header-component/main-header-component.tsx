@@ -1,47 +1,39 @@
 import AuthComponent from '../auth-component/auth-component';
-import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
 import NoAuthComponent from '../no-auth-component/no-auth-component';
-import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useAppSelector} from '../../hooks';
 import {AuthorizationStatus} from '../../const';
 import PlayButtonComponent from '../play-button-component/play-button-component';
 import MyListButtonComponent from '../my-list-button-component/my-list-button-component';
-import {resetMoviesCount} from '../../store/content-process/content-process';
+import LogoComponent from '../logo-component/logo-component';
+import {getCurrentMovie, getPromo} from '../../store/data-process/selectors';
+import {getAuthStatus} from '../../store/user-process/selectors';
+import VisuallyHiddenComponent from '../visually-hidden-component/visually-hidden-component';
 
 function MainHeaderComponent(): JSX.Element {
-  const {promo: {name, posterImage, genre, released, backgroundImage, id}, currentMovie} = useAppSelector(({DATA}) => DATA);
-  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const promo = useAppSelector(getPromo);
+  const {name, posterImage, genre, released, backgroundImage, id, backgroundColor} = promo;
+  const currentMovie = useAppSelector(getCurrentMovie);
+  const authorizationStatus = useAppSelector(getAuthStatus);
   let isFavorite = false;
-  const dispatch = useAppDispatch();
-
-  const handleClick = () => dispatch(resetMoviesCount());
 
   if (id === currentMovie.id) {
     isFavorite = currentMovie.isFavorite;
   }
 
   return (
-    <section className="film-card">
+    <section className="film-card" style={{backgroundColor: backgroundColor}}>
       <div className="film-card__bg">
         <img src={backgroundImage} alt={name}/>
       </div>
-      <h1 className="visually-hidden">WTW</h1>
+      <VisuallyHiddenComponent />
       <header className="page-header film-card__head">
-        <div className="logo">
-          <Link onClick={handleClick} to={AppRoute.Main} className="logo__link">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </Link>
-        </div>
-
+        <LogoComponent classAttribute={''} />
         {authorizationStatus === AuthorizationStatus.Auth ? <AuthComponent /> : <NoAuthComponent/>}
-
       </header>
       <div className="film-card__wrap">
         <div className="film-card__info">
           <div className="film-card__poster">
-            <img src={posterImage} alt={name} width="218" height="327" />
+            <img data-testid="img-promo" src={posterImage} alt={name} width="218" height="327" />
           </div>
           <div className="film-card__desc">
             <h2 className="film-card__title">{name}</h2>

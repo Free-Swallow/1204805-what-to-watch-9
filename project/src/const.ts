@@ -38,7 +38,7 @@ enum HttpCode {
 }
 
 enum RatingText {
-  Bad = 'bad',
+  Bad = 'Bad',
   Normal = 'Normal',
   Good = 'Good',
   VeryGood = 'Very good',
@@ -91,18 +91,37 @@ const enum NameSpace {
   Content = 'CONTENT',
 }
 
-const defaultGenre = 'All genres';
-const MIN_MOVIES_SIMILAR = 0;
-const MAX_MOVIES_SIMILAR = 4;
-const RATING_DEFAULT = 0;
-const COMMENT_MAX_LENGTH = 400;
-const COMMENT_MIN_LENGTH = 50;
-const MIN_COMMENT = 0;
-const INTERVAL_START_VIDEO = 1000;
-const BACKEND_URL = 'https://9.react.pages.academy/wtw';
-const REQUEST_TIMEOUT = 5000;
-const STEP_MOVIES_SHOW = 8;
-const CURRENT_TIME_MOVIE = 0;
+const CollectionConstans = {
+  defaultGenre: 'All genres',
+  MIN_MOVIES_SIMILAR: 0,
+  MAX_MOVIES_SIMILAR: 4,
+  RATING_DEFAULT: 0,
+  COMMENT_MAX_LENGTH: 400,
+  COMMENT_MIN_LENGTH: 50,
+  MIN_COMMENT: 0,
+  INTERVAL_START_VIDEO: 1000,
+  BACKEND_URL: 'https://9.react.pages.academy/wtw',
+  REQUEST_TIMEOUT: 5000,
+  STEP_MOVIES_SHOW: 8,
+  CURRENT_TIME_MOVIE: 0,
+  AVATAR_URL: '../img/avatar.jpg',
+};
+
+const {
+  defaultGenre,
+  CURRENT_TIME_MOVIE,
+  STEP_MOVIES_SHOW,
+  RATING_DEFAULT,
+  MAX_MOVIES_SIMILAR,
+  MIN_MOVIES_SIMILAR,
+  MIN_COMMENT,
+  INTERVAL_START_VIDEO,
+  BACKEND_URL,
+  REQUEST_TIMEOUT,
+  COMMENT_MAX_LENGTH,
+  COMMENT_MIN_LENGTH,
+  AVATAR_URL,
+} = CollectionConstans;
 
 export {
   AppRoute,
@@ -124,5 +143,6 @@ export {
   REQUEST_TIMEOUT,
   NameSpace,
   STEP_MOVIES_SHOW,
-  CURRENT_TIME_MOVIE
+  CURRENT_TIME_MOVIE,
+  AVATAR_URL
 };

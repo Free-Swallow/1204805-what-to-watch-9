@@ -20,21 +20,14 @@ function MainStartScreen(): JSX.Element {
   return (
     <>
       <MainHeaderComponent />
-
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-
           <TabsMoviesListComponent genres={genresList} />
-
           <MoviesListComponent movies={filteredMovies.slice(0, moviesCount)} />
-
           {moviesCount < filteredMovies.length ? <ButtonShowMoreComponent/> : null}
-
         </section>
-
         <FooterComponent />
-
       </div>
     </>
   );

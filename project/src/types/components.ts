@@ -25,10 +25,6 @@ type VideoPlayerProps = {
   srcPoster: string;
 }
 
-type ErrorScreenProps = {
-  link: string;
-}
-
 type MyListButtonProps = {
   id: number;
   isFavorite: boolean;
@@ -40,6 +36,5 @@ export type {
   PrivateRouteProps,
   TabsMoviesListProps,
   VideoPlayerProps,
-  ErrorScreenProps,
   MyListButtonProps
 };

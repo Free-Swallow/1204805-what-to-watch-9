@@ -1,11 +1,12 @@
 import FooterComponent from '../../components/footer-component/footer-component';
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {FormEvent, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
 import {toast} from 'react-toastify';
+import LogoComponent from '../../components/logo-component/logo-component';
 
 function SignInScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -20,7 +21,6 @@ function SignInScreen(): JSX.Element {
   };
 
   const validationPassword = /^.*(?=.{2,})(?=.*\d)(?=.*[a-zA-Z]).*$/i;
-
 
   const checkValidatePassword = (value: string) => {
     if (!validationPassword.test(String(value).toLowerCase())) {
@@ -51,7 +51,6 @@ function SignInScreen(): JSX.Element {
     }
   };
 
-
   if (authorizationStatus === AuthorizationStatus.Auth) {
     navigate(AppRoute.Main);
   }
@@ -59,31 +58,23 @@ function SignInScreen(): JSX.Element {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
-        <div className="logo">
-          <Link to={AppRoute.Main} className="logo__link">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </Link>
-        </div>
-
-        <h1 className="page-title user-page__title">Sign in</h1>
+        <LogoComponent classAttribute={''} />
+        <h1 data-testid="sign-in-title" className="page-title user-page__title">Sign in</h1>
       </header>
-
       <div className="sign-in user-page__content">
         <form onSubmit={handleSubmit} action="" className="sign-in__form">
           <div className="sign-in__fields">
             <div className="sign-in__field">
-              <input ref={loginRef} className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email"/>
+              <input data-testid="login-input" ref={loginRef} className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email"/>
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
             <div className="sign-in__field">
-              <input ref={passwordRef} className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password"/>
+              <input data-testid="password-input" ref={passwordRef} className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password"/>
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
             </div>
           </div>
           <div className="sign-in__submit">
-            <button className="sign-in__btn" type="submit">Sign in</button>
+            <button data-testid="login-button" className="sign-in__btn" type="submit">Sign in</button>
           </div>
         </form>
       </div>

@@ -44,7 +44,7 @@ function VideoPlayerComponent({isPlaying, src, srcPoster}: VideoPlayerProps): JS
   }, []);
 
   return (
-    <video src={src} ref={videoRef} poster={srcPoster} width="280" height="175" />
+    <video data-testid="video-player" src={src} ref={videoRef} poster={srcPoster} width="280" height="175" />
   );
 }
 
